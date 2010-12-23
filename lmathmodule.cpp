@@ -4,6 +4,11 @@
 #include <gmp.h>
 #include <mpfr.h>
 
+#define DEBUG 1
+#ifdef DEBUG
+#define LOG(a) cout << "DEBUG: " << a << endl;
+#endif
+
 using namespace std;
 
 void swap( int &x, int &y)
@@ -79,7 +84,19 @@ public:
     return str;
     }
 
+  /// Adds another number to this. 
+  /**
+   * This number precision is used.
+   */
+  void operator += (const Number &other) {
+    mpfr_add(this->value, this->value, other.value, GMP_RNDD);
+    }
+
   };
+
+// For header.
+class Expression;
+class ExpressionSum;
 
 
 /// Base expression class representing single integer.
@@ -93,24 +110,86 @@ private:
   
 // Methods.
 
-protected:
+public:
 
   /// Counts expression value with given binary precision.
   Number &count(int precision) {
-    // TODO: Add function, which translates base 10 precision to base 2.
+#ifdef DEBUG
+    LOG("NUMBER")
+    LOG(value)
+#endif
 
     Number &number = *(new Number(value, precision));
 
     return number;
     }
 
-public:
+  Expression(): value(0) {
+    }
 
   Expression(int _value): value(_value) {
     }
 
+  Expression &operator + (const Expression &other); 
+
+  std::string asString(int precision, int base=10) {
+    // TODO: Add function, which translates base 10 precision to base 2.
+    return this->count(precision).asString(base);
+    }
+
   };
- 
+
+/// Class representing sum of two expressions.
+class ExpressionSum: public Expression {
+
+// Attributes.
+
+private:
+
+  Expression left, right;
+
+// Methods.
+
+public:
+
+  ExpressionSum(const Expression _left, const Expression _right) {
+    this->left = _left;
+    this->right = _right;
+    }
+  
+  /// Counts expression value with given binary precision.
+  Number &count(int precision) {
+
+#ifdef DEBUG
+    LOG("SUM")
+#endif
+    Number &number = left.count(precision);
+    number += right.count(precision);
+
+    return number;
+    }
+
+/*
+  Expression &operator + (const Expression &other) {
+    Expression &sum = *(new ExpressionSum(*this, other));
+    return sum;
+    }
+*/
+
+  };
+
+Expression &Expression::operator + (const Expression &other) {
+  ExpressionSum &sum = *(new ExpressionSum(*this, other));
+  return sum;
+  }
+
+/*
+ExpressionSum &operator + (const Expression &a, const Expression &b) {
+  ExpressionSum &sum = *(new ExpressionSum(a, b));
+  return sum;
+  }
+*/
+
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python.hpp>
@@ -125,5 +204,9 @@ BOOST_PYTHON_MODULE(lmath)
     ;
     class_<Number>("Number", init<int, int>())
       .def("asString", &Number::asString)
+      ;
+    class_<Expression>("Expression", init<int>())
+      .def("asString", &Expression::asString)
+      .def(self + self)
       ;
 }

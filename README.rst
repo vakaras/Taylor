@@ -18,3 +18,7 @@ Reikalavimai:
 
   # install MPFR library
   sudo apt-get install libmpfr-dev
+
+Darbai:
+
+* Suformuoti tikslumo (dvejetainiais skaitmenimis) taisykles.
