@@ -15,3 +15,6 @@ Reikalavimai:
 
   # install the boost build tool: bjam
   sudo apt-get install boost-build
+
+  # install MPFR library
+  sudo apt-get install libmpfr-dev

@@ -1,8 +1,25 @@
 #include <iostream>
  
 using namespace std;
+
+void swap( int &x, int &y)
+{
+    int tmp = x;
+    x = y;
+    y = tmp;
+}
  
+int &getC() {
+  int &c = *(new int);
+  return c;
+  }
+
 void say_hello(const char* name) {
+    getC() = 0;
+    int a = 1, b = 2;
+    cout << "a = " << a << " b = " << b << endl;
+    swap(a, b);
+    cout << "a = " << a << " b = " << b << endl;
     cout << "Hello " <<  name << "!\n";
 }
 

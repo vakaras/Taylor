@@ -5,7 +5,6 @@ from distutils.extension import Extension
  
 setup(name="PackageName",
     ext_modules=[
-        Extension("lmath", ["lmathmodule.cpp"],
-        libraries = ["boost_python", "gmp", "mpfr",]
-        )
+        Extension("hello", ["hellomodule.cpp"],
+        libraries = ["boost_python"])
     ])
