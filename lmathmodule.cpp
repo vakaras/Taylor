@@ -98,9 +98,27 @@ public:
 class Expression;
 class ExpressionSum;
 
-
-/// Base expression class representing single integer.
+/// Base expression class.
 class Expression {
+
+// Methods.
+
+public:
+
+  Number &count(int precision) {
+    }
+
+  Expression &operator + (const Expression &other); 
+
+  std::string asString(int precision, int base=10) {
+    // TODO: Add function, which translates base 10 precision to base 2.
+    return this->count(precision).asString(base);
+    }
+
+  };
+
+/// Class representing single integer.
+class ExpressionInteger {
 
 // Attributes.
 
@@ -124,13 +142,11 @@ public:
     return number;
     }
 
-  Expression(): value(0) {
+  ExpressionInteger(): value(0) {
     }
 
-  Expression(int _value): value(_value) {
+  ExpressionInteger(int _value): value(_value) {
     }
-
-  Expression &operator + (const Expression &other); 
 
   std::string asString(int precision, int base=10) {
     // TODO: Add function, which translates base 10 precision to base 2.
@@ -205,7 +221,7 @@ BOOST_PYTHON_MODULE(lmath)
     class_<Number>("Number", init<int, int>())
       .def("asString", &Number::asString)
       ;
-    class_<Expression>("Expression", init<int>())
+    class_<Expression>("Expression", init<>())
       .def("asString", &Expression::asString)
       .def(self + self)
       ;
