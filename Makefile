@@ -1,4 +1,4 @@
-.PHONY: build
+.PHONY: build prog
 
 build: 
 	python setup.py build
@@ -8,3 +8,9 @@ link:
 
 test: 
 	python test.py 
+
+prog: clean
+	g++ -g main.cpp -lmpfr -lgmp -o prog
+
+clean:
+	rm -f prog

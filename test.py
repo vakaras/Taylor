@@ -1,10 +1,10 @@
 import lmath
 
-from lmath import Number
+#   from lmath import Number
 
-a = Number(2, 32)
+#   a = Number(2, 32)
 
-print a.asString(10)
+#   print a.asString(10)
 
 from lmath import Expression
 
