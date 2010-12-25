@@ -9,6 +9,7 @@
 #include "cpp/expression_sum.h"
 #include "cpp/expression_subtract.h"
 #include "cpp/expression_negative.h"
+#include "cpp/expression_multiplication.h"
 
 using namespace std;
 
@@ -113,6 +114,23 @@ void test_expression_negative() {
   cout << "Ok." << endl;
   }
 
+void test_expression_multiplication() {
+  cout << "Testing class ExpressionMultiplication. ";
+  //cout << endl;
+
+  ExpressionInteger a(2), b(3), d(-6);
+
+  ExpressionMultiplication c(a, b);
+  //cout << c.asString(32, 10) << endl;
+  assert(c.asString(32, 10) == string("6,0000000000"));
+
+  ExpressionMultiplication e(c, d);
+  //cout << e.asString(32, 10) << endl;
+  assert(e.asString(32, 10) == string("-36,000000000"));
+
+  cout << "Ok." << endl;
+  }
+
 void test_polymorphism() {
 
   cout << "Testing class Expression polymorphism. ";
@@ -150,6 +168,7 @@ int main() {
   test_expression_sum();
   test_expression_subtract();
   test_expression_negative();
+  test_expression_multiplication();
   test_polymorphism();
 
   return 0;

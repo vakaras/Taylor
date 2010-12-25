@@ -106,7 +106,7 @@ public:
     mpfr_add(this->value, this->value, other.value, GMP_RNDD);
     }
 
-  /// Substracts another number from this. 
+  /// Subtracts another number from this. 
   /**
    * This number precision is used.
    */
@@ -124,6 +124,22 @@ public:
     mpfr_neg(number.value, number.value, GMP_RNDD);
 
     return number;
+    }
+
+  /// Multiplies this number from another. 
+  /**
+   * This number precision is used.
+   */
+  void operator *= (const Number &other) {
+    mpfr_mul(this->value, this->value, other.value, GMP_RNDD);
+    }
+
+  /// Divides this number from another. 
+  /**
+   * This number precision is used.
+   */
+  void operator /= (const Number &other) {
+    mpfr_div(this->value, this->value, other.value, GMP_RNDD);
     }
 
   };
