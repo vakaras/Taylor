@@ -7,6 +7,7 @@
 #include "cpp/expression.h"
 #include "cpp/expression_integer.h"
 #include "cpp/expression_sum.h"
+#include "cpp/expression_subtract.h"
 #include "cpp/expression_negative.h"
 
 using namespace std;
@@ -78,6 +79,23 @@ void test_expression_sum() {
   cout << "Ok." << endl;
   }
 
+void test_expression_subtract() {
+  cout << "Testing class ExpressionSum. ";
+  //cout << endl;
+
+  ExpressionInteger a(20), b(30), d(-60);
+
+  ExpressionSubtract c(a, b);
+  //cout << c.asString(32, 10) << endl;
+  assert(c.asString(32, 10) == string("-10,000000000"));
+
+  ExpressionSubtract e(c, d);
+  //cout << e.asString(32, 10) << endl;
+  assert(e.asString(32, 10) == string("50,000000000"));
+
+  cout << "Ok." << endl;
+  }
+
 void test_expression_negative() {
   cout << "Testing class ExpressionNegative. ";
   //cout << endl;
@@ -130,6 +148,7 @@ int main() {
   test_number();
   test_expression_integer();
   test_expression_sum();
+  test_expression_subtract();
   test_expression_negative();
   test_polymorphism();
 
