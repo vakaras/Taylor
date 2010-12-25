@@ -18,6 +18,7 @@ class Number {
 
 protected:
 
+  int precision;
   mpfr_t value;
 
 // Methods.
@@ -28,9 +29,16 @@ public:
    * @param integer is initial Number value.
    * @param precision the length of number in memory in bits.
    */
-  Number(int integer, int precision) {
-    mpfr_init2(this->value, precision);
+  Number(int integer, int _precision) {
+    this->precision = _precision;
+    mpfr_init2(this->value, this->precision);
     mpfr_set_si(this->value, integer, GMP_RNDD);
+    }
+
+  Number(const Number &number) {
+    this->precision = number.precision;
+    mpfr_init2(this->value, this->precision);
+    mpfr_set(this->value, number.value, GMP_RNDD);
     }
 
   ~Number() {
@@ -104,6 +112,18 @@ public:
    */
   void operator -= (const Number &other) {
     mpfr_sub(this->value, this->value, other.value, GMP_RNDD);
+    }
+
+  /// Make this number negative.
+  /**
+   * This number precision is used.
+   */
+  Number &operator - () const {
+
+    Number &number = *(new Number(*this));
+    mpfr_neg(number.value, number.value, GMP_RNDD);
+
+    return number;
     }
 
   };
