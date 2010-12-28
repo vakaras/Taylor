@@ -36,6 +36,9 @@ public:
     }
 
   Number(const Number &number) {
+#ifdef DEBUG
+    LOG("COPYING NUMBER");
+#endif
     this->precision = number.precision;
     mpfr_init2(this->value, this->precision);
     mpfr_set(this->value, number.value, GMP_RNDD);
@@ -52,6 +55,8 @@ public:
    */
   std::string asString(int base=10) {
 
+    // TODO: Add version which returns rounded number.
+
     mpfr_exp_t exp;
 
     char *representation = mpfr_get_str(
@@ -59,6 +64,42 @@ public:
 
     int len = strlen(representation);
     std::string &str = *(new std::string);
+    int newLen = len + 1;               // The length of str.
+    bool negative = representation[0] == '-'; 
+                                        // If the number is negative.
+
+    if (exp <= 0) {
+      newLen += -exp + 1;
+      }
+
+    str.resize(newLen);
+
+    if (negative) {
+      str[0] = '-';
+      }
+
+    int i, j = 0 + negative;
+    for (i = 0 + negative; i < exp + negative; i++) {         
+                                        // If number is greater than 1.
+      str[i] = representation[j++];
+      }
+    if (exp <= 0) {
+      str[i++] = '0';
+      str[i++] = ',';                     // FIXME: Hardcoded value.
+      for (; exp < 0; i++ && exp++) {
+                                          // If number is smaller than 1.
+        str[i] = '0';
+        }
+      }
+    else {
+      str[i++] = ',';                     // FIXME: Hardcoded value.
+      }
+    for (; j < len; j++) {
+      str[i++] = representation[j];
+      }
+
+    mpfr_free_str(representation);
+    return str;
 
     //std::cout << exp << std::endl;
 
@@ -134,12 +175,64 @@ public:
     mpfr_mul(this->value, this->value, other.value, GMP_RNDD);
     }
 
+  /// Multiplies this number from another. 
+  /**
+   * This number precision is used.
+   */
+  Number &operator * (const Number &other) const {
+
+    Number &number = *(new Number(*this));
+    mpfr_mul(number.value, number.value, other.value, GMP_RNDD);
+
+    return number;
+    }
+
+  /// Raises this number by power of 2.
+  void sqr() {
+    mpfr_sqr(this->value, this->value, GMP_RNDD);
+    }
+
   /// Divides this number from another. 
   /**
    * This number precision is used.
    */
   void operator /= (const Number &other) {
     mpfr_div(this->value, this->value, other.value, GMP_RNDD);
+    }
+
+  /// Multiplies this by 2^{bits}.
+  /**
+   * This number precision is used.
+   */
+  void operator <<= (const long bits) {
+    mpfr_mul_2si(this->value, this->value, bits, GMP_RNDD);
+    }
+  
+  /// Divides this by 2^{bits}.
+  /**
+   * This number precision is used.
+   */
+  void operator >>= (const long bits) {
+    mpfr_div_2si(this->value, this->value, bits, GMP_RNDD);
+    }
+
+  /// Compares this number with other.
+  bool operator >= (const Number &other) const {
+    return mpfr_cmp(this->value, other.value) >= 0;
+    }
+  
+  /// Compares this number with other.
+  bool operator <= (const Number &other) const {
+    return mpfr_cmp(this->value, other.value) <= 0;
+    }
+
+  /// Compares this number absolute value with other number absolute value.
+  /**
+   * @returns positive if this number is bigger, zero if they are equal and
+   * negative if this number is smaller.
+   */
+  int cmpAbs(const Number &other) const {
+    return mpfr_cmpabs(this->value, other.value);
     }
 
   };

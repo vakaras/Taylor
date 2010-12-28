@@ -11,6 +11,8 @@
 #include "cpp/expression_negative.h"
 #include "cpp/expression_multiplication.h"
 #include "cpp/expression_division.h"
+#include "cpp/expression_sin.h"
+#include "cpp/expression_cos.h"
 
 using namespace std;
 
@@ -40,7 +42,34 @@ void test_number() {
 
   a -= Number(243, 32);
   //cout << a.asString() << endl;
+  string b = a.asString();
+  //cout << b.length() << endl;
   assert(a.asString() == string("-100,00000000"));
+
+  a /= Number(20, 32);
+  //cout << a.asString() << endl;
+  assert(a.asString() == string("-5,0000000000"));
+
+  a *= Number(-3, 32);
+  //cout << a.asString() << endl;
+  assert(a.asString() == string("15,000000000"));
+
+  a -= Number(14, 32);
+  a >>= 4;
+  //cout << a.asString() << endl;
+  assert(a.asString() == string("0,062500000000"));
+
+  a <<= 4;
+  //cout << a.asString() << endl;
+  assert(a.asString() == string("1,0000000000"));
+
+  a >>= 32;
+  //cout << a.asString() << endl;
+  assert(a.asString() == string("0,00000000023283064365"));
+
+  a <<= 32;
+  //cout << a.asString() << endl;
+  assert(a.asString() == string("1,0000000000"));
 
   cout << "Ok." << endl;
   }
@@ -149,6 +178,46 @@ void test_expression_division() {
   ExpressionMultiplication f(c, b);
   //cout << f.asString(32, 10) << endl;
   assert(f.asString(32, 10) == string("1,9999999995"));
+  // FIXME: Must be 2,0000...
+
+  cout << "Ok." << endl;
+  }
+
+
+void test_expression_sin() {
+  cout << "Testing class ExpressionSin. ";
+  //cout << endl;
+
+  ExpressionInteger a(1), b(-1);
+
+  ExpressionSin c(a);
+  //cout << c.asString(32, 10) << endl;
+  assert(c.asString(32, 10) == string("0,84147098404"));
+  // FIXME: Should return only correct digits!
+
+  ExpressionSin d(b);
+  //cout << d.asString(32, 10) << endl;
+  assert(d.asString(32, 10) == string("-0,84147098545"));
+  // FIXME: Should return only correct digits!
+
+  cout << "Ok." << endl;
+  }
+
+void test_expression_cos() {
+  cout << "Testing class ExpressionCos. ";
+  //cout << endl;
+
+  ExpressionInteger a(1), b(-1);
+
+  ExpressionCos c(a);
+  //cout << c.asString(32, 10) << endl;
+  assert(c.asString(32, 10) == string("0,54030230501"));
+  // FIXME: Should return only correct digits!
+
+  ExpressionCos d(b);
+  //cout << d.asString(32, 10) << endl;
+  assert(d.asString(32, 10) == string("0,54030230501"));
+  // FIXME: Should return only correct digits!
 
   cout << "Ok." << endl;
   }
@@ -192,6 +261,8 @@ int main() {
   test_expression_negative();
   test_expression_multiplication();
   test_expression_division();
+  test_expression_sin();
+  test_expression_cos();
   test_polymorphism();
 
   return 0;
