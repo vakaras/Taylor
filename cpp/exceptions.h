@@ -42,4 +42,32 @@ public:
 
   };
 
+class ConversionError: public Exception {
+
+// Methods:
+
+public:
+
+  ConversionError(): Exception("Unknown.") {
+    }
+
+  ConversionError(const char *_msg): Exception(_msg) {
+    }
+
+  };
+
+class FormattingError: public Exception {
+
+// Methods:
+
+public:
+
+  FormattingError(): Exception("Unknown.") {
+    }
+
+  FormattingError(const char *_msg): Exception(_msg) {
+    }
+
+  };
+
 #endif

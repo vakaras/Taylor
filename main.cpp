@@ -73,6 +73,20 @@ void test_number() {
   //cout << a.asString() << endl;
   assert(a.asString() == string("1,0000000000"));
 
+  Number f = Number(1, dec_to_bin(10));
+  f /= 3;
+  //cout << "%Rf:     \"" << f.asFormatedString("%Rf") << '\"' << endl;
+  assert(f.asFormatedString("%Rf") == string("0.333333"));
+  //cout << "%*.Rf:   \"" << f.asFormatedString(10) << '\"' << endl;
+  assert(f.asFormatedString(10) == string("0.333333333"));
+  //cout << "%*.*Rf:  \"" << f.asFormatedString(
+  //    "%*.*Rf", 12, 8) << '\"' << endl;
+  assert(f.asFormatedString("%*.*Rf", 12, 8) == string("  0.33333333"));
+
+  f *= 3;
+  //cout << "%*.Rf:   \"" << f.asFormatedString(10) << '\"' << endl;
+  assert(f.asFormatedString(10) == string("1.000000000"));
+
   cout << "Ok." << endl;
   }
 

@@ -3,11 +3,26 @@
 
 #include <cstring>
 #include <string>
+#include <cmath>
 #include <gmp.h>
 #include <mpfr.h>
 
 #include "utils.h"
 #include "exceptions.h"
+
+// Helper functions.
+
+/// Converts decimal precision to binary.
+long dec_to_bin(long decimal) {
+  static double lg = log(10);
+  return (((double) decimal) * lg) + 16;
+  }
+
+/// Converts binary precision to decimal.
+long bin_to_dec(long decimal) {
+  static double lg = log(10);
+  return ceil((((double) decimal) / lg));
+  }
 
 /// Wrapper class for MPFR library.
 /**
@@ -153,6 +168,60 @@ public:
     mpfr_free_str(representation);
 
     return str;
+    }
+
+  /// Returns string representation in form like "%*.*Rf"
+  std::string asFormatedString(
+      const char *templ, long width, long precision) {
+    // FIXME: Not DRY code.
+
+    char *representation;
+    if (mpfr_asprintf(
+          &representation, templ, width, precision, this->value) < 0) {
+      throw ConversionError();
+      }
+
+    return std::string(representation);
+    }
+
+  /// Returns string representation in form "%*Rf" with given width.
+  std::string asFormatedString(long width) {
+    // FIXME: Not DRY code.
+    //
+    // TODO: Change to work.
+
+    mpfr_exp_t exp = mpfr_get_exp(this->value);
+    long decExp = bin_to_dec(exp);
+    long precision;
+
+    if (width <= decExp) {
+      throw FormattingError("Given width is too small.");
+      }
+    else {
+      precision = width - 1 - decExp;
+      }
+
+    char *representation;
+
+    if (mpfr_asprintf(
+            &representation, "%*.*Rf", width, precision, this->value
+            ) < 0) {
+      throw ConversionError();
+      }
+
+    return std::string(representation);
+    }
+ 
+  /// Returns string representation in form like "%Rf"
+  std::string asFormatedString(const char *templ) {
+    // FIXME: Not DRY code.
+
+    char *representation;
+    if (mpfr_asprintf(&representation, templ, this->value) < 0) {
+      throw ConversionError();
+      }
+
+    return std::string(representation);
     }
 
   /// Adds another number to this. 
