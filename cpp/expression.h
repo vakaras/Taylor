@@ -22,10 +22,16 @@ public:
   /// Returns latex math mode representation of the expression.
   //virtual std::string &latex() const = 0;
   //                                    TODO
-
+  
   /// Copy constructor.
   virtual Expression &clone() const = 0;
+
+  /// Returns string representation of number in normal form.
+//std::string asNormalString(int precision, int base=10) {
+//  // TODO
+//  }
   
+  /// Returns string representation of number in plain form.
   std::string asString(int precision, int base=10) {
     // TODO: Add function, which translates base 10 precision to base 2.
     return this->count(precision).asString(base);

@@ -7,6 +7,7 @@
 #include <mpfr.h>
 
 #include "utils.h"
+#include "exceptions.h"
 
 /// Wrapper class for MPFR library.
 /**
@@ -18,7 +19,7 @@ class Number {
 
 protected:
 
-  int precision;
+  long precision;
   mpfr_t value;
 
 // Methods.
@@ -33,6 +34,7 @@ public:
     this->precision = _precision;
     mpfr_init2(this->value, this->precision);
     mpfr_set_si(this->value, integer, GMP_RNDD);
+    this->validate();
     }
 
   Number(const Number &number) {
@@ -46,6 +48,20 @@ public:
 
   ~Number() {
     mpfr_clear(this->value);
+    }
+
+  /// Validates if number is in correct form.
+  /* If it is not, then throws Exception.
+   */
+  void validate() {
+    mpfr_exp_t exp = mpfr_get_exp(this->value);
+    if (exp > this->precision) {
+      throw OverflowException();
+      }
+    }
+
+  long getPrecision() {
+    return this->precision;
     }
 
   /// Returns string representation of a number.
@@ -85,14 +101,14 @@ public:
       }
     if (exp <= 0) {
       str[i++] = '0';
-      str[i++] = ',';                     // FIXME: Hardcoded value.
+      str[i++] = UTILS_COMMA;
       for (; exp < 0; i++ && exp++) {
                                           // If number is smaller than 1.
         str[i] = '0';
         }
       }
     else {
-      str[i++] = ',';                     // FIXME: Hardcoded value.
+      str[i++] = UTILS_COMMA;
       }
     for (; j < len; j++) {
       str[i++] = representation[j];
@@ -118,7 +134,7 @@ public:
       for (int i = 0; i < comma_pos; i++) {
         str[i] = representation[i];
         }
-      str[comma_pos] = ',';                   // FIXME: Hardcoded value.
+      str[comma_pos] = UTILS_COMMA;
       }
     else {
       // If there is no digits before comma.
@@ -126,7 +142,7 @@ public:
       str.resize(len+2);
       str[0] = representation[0];
       str[comma_pos] = '0';
-      str[comma_pos+1] = ',';           // FIXME: Hardcoded value.
+      str[comma_pos+1] = UTILS_COMMA;
       move++;
       }
     
@@ -145,6 +161,7 @@ public:
    */
   void operator += (const Number &other) {
     mpfr_add(this->value, this->value, other.value, GMP_RNDD);
+    this->validate();
     }
 
   /// Subtracts another number from this. 
@@ -153,6 +170,7 @@ public:
    */
   void operator -= (const Number &other) {
     mpfr_sub(this->value, this->value, other.value, GMP_RNDD);
+    this->validate();
     }
 
   /// Make this number negative.
@@ -164,6 +182,7 @@ public:
     Number &number = *(new Number(*this));
     mpfr_neg(number.value, number.value, GMP_RNDD);
 
+    number.validate();
     return number;
     }
 
@@ -173,6 +192,16 @@ public:
    */
   void operator *= (const Number &other) {
     mpfr_mul(this->value, this->value, other.value, GMP_RNDD);
+    this->validate();
+    }
+
+  /// Multiplies this number from signed integer. 
+  /**
+   * This number precision is used.
+   */
+  void operator *= (const long &other) {
+    mpfr_mul_si(this->value, this->value, other, GMP_RNDD);
+    this->validate();
     }
 
   /// Multiplies this number from another. 
@@ -184,12 +213,40 @@ public:
     Number &number = *(new Number(*this));
     mpfr_mul(number.value, number.value, other.value, GMP_RNDD);
 
+    number.validate();
+    return number;
+    }
+
+  /// Divides this number from another. 
+  /**
+   * This number precision is used.
+   */
+  Number &operator / (const Number &other) const {
+
+    Number &number = *(new Number(*this));
+    mpfr_div(number.value, number.value, other.value, GMP_RNDD);
+
+    number.validate();
+    return number;
+    }
+
+  /// Divides this number from integer. 
+  /**
+   * This number precision is used.
+   */
+  Number &operator / (const long &other) const {
+
+    Number &number = *(new Number(*this));
+    mpfr_div_si(number.value, number.value, other, GMP_RNDD);
+
+    number.validate();
     return number;
     }
 
   /// Raises this number by power of 2.
   void sqr() {
     mpfr_sqr(this->value, this->value, GMP_RNDD);
+    this->validate();
     }
 
   /// Divides this number from another. 
@@ -198,6 +255,16 @@ public:
    */
   void operator /= (const Number &other) {
     mpfr_div(this->value, this->value, other.value, GMP_RNDD);
+    this->validate();
+    }
+
+  /// Divides this number from integer. 
+  /**
+   * This number precision is used.
+   */
+  void operator /= (const long &other) {
+    mpfr_div_si(this->value, this->value, other, GMP_RNDD);
+    this->validate();
     }
 
   /// Multiplies this by 2^{bits}.
@@ -206,6 +273,7 @@ public:
    */
   void operator <<= (const long bits) {
     mpfr_mul_2si(this->value, this->value, bits, GMP_RNDD);
+    this->validate();
     }
   
   /// Divides this by 2^{bits}.
@@ -214,6 +282,7 @@ public:
    */
   void operator >>= (const long bits) {
     mpfr_div_2si(this->value, this->value, bits, GMP_RNDD);
+    this->validate();
     }
 
   /// Compares this number with other.
@@ -233,6 +302,12 @@ public:
    */
   int cmpAbs(const Number &other) const {
     return mpfr_cmpabs(this->value, other.value);
+    }
+
+  /// Floor.
+  void floor() {
+    mpfr_floor(this->value, this->value);
+    this->validate();
     }
 
   };

@@ -2,6 +2,7 @@
 #define TAYLOR_CPP_EXPRESSION_SIN
 
 #include "expression.h"
+#include "number_pi.h"
 
 class ExpressionSin: public Expression {
 
@@ -34,7 +35,17 @@ public:
 
     Number &number = argument->count(precision_argument);
                                         // x, sum
+    // Minimizing argument to [-pi; pi]
+    Number const &pi = getPi(precision);
 
+    Number multiplier = number / pi;
+    multiplier >>= 1;
+    multiplier.floor();
+    multiplier *= pi;
+    multiplier <<= 1;
+    number -= multiplier;
+
+    // Calculating using Taylor.
     Number numberSquare = number * number;
                                         // x^{2}
     Number toAdd = number;              // \frac{x^n}{n!}
@@ -44,7 +55,7 @@ public:
 
     int i = 2;
     while (toAdd.cmpAbs(remainder) > 0) {
-      // TODO: Add check for cases with possibly wrong precission.
+      // TODO: Add check for cases with possibly wrong precision.
       
       toAdd *= numberSquare;            // \frac{x^n}{(n-2)!}
       toAdd /= Number((i)*(i+1), precision);     
