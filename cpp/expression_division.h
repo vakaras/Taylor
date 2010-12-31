@@ -14,12 +14,12 @@ private:
     *denominator;
 // Methods.
 
-  int getNumeratorPrecision(int precision) const {
+  long getNumeratorPrecision(int precision) const {
     // FIXME: Write normal.
     return precision;
     }
   
-  int getDenominatorPrecision(int precision) const {
+  long getDenominatorPrecision(int precision) const {
     // FIXME: Write normal.
     return precision;
     }
@@ -32,14 +32,14 @@ public:
     denominator = &_denominator;
     }
   
-  Number &count(int precision) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("DIVISION");
 #endif
 
-    int precision_numerator = this->getNumeratorPrecision(precision);
-    int precision_denominator = this->getDenominatorPrecision(precision);
+    long precision_numerator = this->getNumeratorPrecision(digits);
+    long precision_denominator = this->getDenominatorPrecision(digits);
 
     Number &number = numerator->count(precision_numerator);
     number /= denominator->count(precision_denominator);

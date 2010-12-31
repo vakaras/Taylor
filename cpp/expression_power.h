@@ -33,14 +33,17 @@ public:
     power = &_power;
     }
   
-  Number &count(int precision) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("POWER");
 #endif
 
-    int precision_argument = this->getArgumentPrecision(precision);
-    int precision_power = this->getPowerPrecision(precision);
+    // TODO: Make refactoring.
+    long precision = dec_to_bin(digits);     // TODO: Check if correct.
+
+    long precision_argument = this->getArgumentPrecision(digits);
+    long precision_power = this->getPowerPrecision(digits);
 
     Number one(1, precision);
 

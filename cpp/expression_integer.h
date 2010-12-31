@@ -21,7 +21,7 @@ public:
   ExpressionInteger(int _value): value(_value) {
     }
 
-  Number &count(int digits) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("NUMBER")

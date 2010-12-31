@@ -31,7 +31,7 @@ public:
     argument = &_argument;
     }
 
-  Number &count(int digits) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("SIN");
@@ -48,48 +48,6 @@ public:
         getPi2(precision),
         getPi4(precision)
         );
-
-//                                      // x, sum
-//  // Minimizing argument to [-pi; pi]
-//  Number const &pi = getPi(digits);
-
-//  Number multiplier = number / pi;
-//  multiplier >>= 1;
-//  multiplier.floor();
-//  multiplier *= pi;
-//  multiplier <<= 1;
-//  number -= multiplier;
-
-//  // Calculating using Taylor.
-//  Number numberSquare = number * number;
-//                                      // x^{2}
-//  Number toAdd = number;              // \frac{x^n}{n!}
-
-//  Number remainder(1, precision);      
-//  remainder >>= precision;            // 2^{-a}
-
-//  int i = 2;
-//  while (toAdd.cmpAbs(remainder) > 0) {
-//    // TODO: Add check for cases with possibly wrong precision.
-//    
-//    toAdd *= numberSquare;            // \frac{x^n}{(n-2)!}
-//    toAdd /= Number((i)*(i+1), precision);     
-//                                      // \frac{x^n}{n!} 
-//    i += 2;
-
-//    if (!(i % 4)) {
-//      number -= toAdd;
-//      //std::cout << "to add: -" << toAdd.asString() << std::endl;
-//      }
-//    else {
-//      number += toAdd;
-//      //std::cout << "to add: +" << toAdd.asString() << std::endl;
-//      }
-//    //std::cout << "number: " << number.asString() << std::endl;
-//    
-//    }
-
-//  return number;
     }
 
   Expression &clone() const {

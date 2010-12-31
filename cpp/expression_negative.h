@@ -19,13 +19,13 @@ public:
     expression = &_expression;
     }
   
-  Number &count(int precision) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("NEGATIVE");
 #endif
 
-    Number &number = expression->count(precision);
+    Number &number = expression->count(digits);
     number = -number;
 
     return number;

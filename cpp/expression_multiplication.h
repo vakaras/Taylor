@@ -15,12 +15,12 @@ private:
 
 // Methods.
 
-  int getLeftPrecision(int precision) const {
+  long getLeftPrecision(int precision) const {
     // FIXME: Write normal.
     return precision;
     }
   
-  int getRightPrecision(int precision) const {
+  long getRightPrecision(int precision) const {
     // FIXME: Write normal.
     return precision;
     }
@@ -33,17 +33,20 @@ public:
     right = &_right;
     }
   
-  Number &count(int precision) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("MULTIPLICATION");
 #endif
 
-    int precision_left = this->getLeftPrecision(precision);
-    int precision_right = this->getRightPrecision(precision);
+    // TODO: Check code.
+    //
+    long digits_left = this->getLeftPrecision(digits);
+    long digits_right = this->getRightPrecision(digits);
 
-    Number &number = left->count(precision_left);
-    number *= right->count(precision_right);
+    Number &number = left->count(digits_left);
+    // TODO Check if argument precision can be used.
+    number *= right->count(digits_right);
 
     return number;
     }

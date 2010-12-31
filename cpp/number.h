@@ -86,8 +86,6 @@ public:
    */
   std::string asString(int base=10) {
 
-    // TODO: Add version which returns rounded number.
-
     mpfr_exp_t exp;
 
     char *representation = mpfr_get_str(
@@ -187,8 +185,6 @@ public:
   /// Returns string representation in form "%*Rf" with given width.
   std::string asFormatedString(long width) {
     // FIXME: Not DRY code.
-    //
-    // TODO: Change to work.
 
     mpfr_exp_t exp = mpfr_get_exp(this->value);
     long decExp = bin_to_dec(exp);

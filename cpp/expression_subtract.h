@@ -22,14 +22,14 @@ public:
     right = &_right;
     }
   
-  Number &count(int precision) const {
+  Number &count(long digits) const {
 
 #ifdef DEBUG
     LOG("SUBTRACT");
 #endif
 
-    Number &number = left->count(precision);
-    number -= right->count(precision);
+    Number &number = left->count(digits);
+    number -= right->count(digits);
 
     return number;
     }
