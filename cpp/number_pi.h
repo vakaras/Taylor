@@ -41,8 +41,10 @@ Number ataninvint(long x, long precision) {
   return number;
   }
 
-/// Returns pi/4 as Number in given precision.
-const Number &getPi4(long precision) {
+/// Returns pi/4 as Number with correct at least given decimal diggits.
+const Number &getPi4(long digits) {
+
+  long precision = dec_to_bin(digits);
 
   static Number *pi4 = NULL;
 
@@ -55,6 +57,21 @@ const Number &getPi4(long precision) {
     }
   
   return *pi4;
+  }
+
+/// Returns pi/2 as number in given precision.
+const Number &getPi2(long precision) {
+
+  static Number *pi = NULL;
+
+  if ((!pi) || (pi && pi->getPrecision() < precision)) {
+    if (pi)
+      delete pi;
+    pi = new Number(getPi4(precision));
+    *pi <<= 1;
+    }
+
+  return *pi;
   }
 
 /// Returns pi as number in given precision.

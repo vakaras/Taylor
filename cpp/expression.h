@@ -18,6 +18,7 @@ class Expression {
 public:
 
   virtual Number &count(int precision) const = 0;
+  // TODO: Replace to long.
 
   /// Returns latex math mode representation of the expression.
   //virtual std::string &latex() const = 0;
@@ -32,9 +33,9 @@ public:
 //  }
   
   /// Returns string representation of number in plain form.
-  std::string asString(int precision, int base=10) {
+  std::string asString(long digits) {
     // TODO: Add function, which translates base 10 precision to base 2.
-    return this->count(precision).asString(base);
+    return this->count(digits).asFormatedString(digits);
     }
 
   };

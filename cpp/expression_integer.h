@@ -21,12 +21,14 @@ public:
   ExpressionInteger(int _value): value(_value) {
     }
 
-  Number &count(int precision) const {
+  Number &count(int digits) const {
 
 #ifdef DEBUG
     LOG("NUMBER")
     LOG(value)
 #endif
+
+    long precision = dec_to_bin(digits);
 
     Number &number = *(new Number(this->value, precision));
 

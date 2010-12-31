@@ -14,13 +14,13 @@
 
 /// Converts decimal precision to binary.
 long dec_to_bin(long decimal) {
-  static double lg = log(10);
+  static double lg = log(10)/log(2);
   return (((double) decimal) * lg) + 16;
   }
 
 /// Converts binary precision to decimal.
 long bin_to_dec(long decimal) {
-  static double lg = log(10);
+  static double lg = log(10)/log(2);
   return ceil((((double) decimal) / lg));
   }
 
@@ -45,7 +45,7 @@ public:
    * @param integer is initial Number value.
    * @param precision the length of number in memory in bits.
    */
-  Number(int integer, int _precision) {
+  Number(long integer, long _precision) {
     this->precision = _precision;
     mpfr_init2(this->value, this->precision);
     mpfr_set_si(this->value, integer, GMP_RNDD);
@@ -75,7 +75,7 @@ public:
       }
     }
 
-  long getPrecision() {
+  long getPrecision() const {
     return this->precision;
     }
 
@@ -194,6 +194,10 @@ public:
     long decExp = bin_to_dec(exp);
     long precision;
 
+    if (mpfr_zero_p(this->value)) {
+      decExp = 0;
+      }
+
     if (width <= decExp) {
       throw FormattingError("Given width is too small.");
       }
@@ -242,7 +246,20 @@ public:
     this->validate();
     }
 
-  /// Make this number negative.
+  /// Subtracts another number from this.
+  /**
+   * This number precision is used.
+   */
+  Number &operator - (const Number &other) const {
+
+    Number &number = *(new Number(*this));
+    mpfr_sub(number.value, number.value, other.value, GMP_RNDD);
+
+    number.validate();
+    return number;
+    }
+
+  /// Returns a negative copy of number.
   /**
    * This number precision is used.
    */
@@ -371,6 +388,19 @@ public:
    */
   int cmpAbs(const Number &other) const {
     return mpfr_cmpabs(this->value, other.value);
+    }
+
+  /// Checks if number is negative.
+  /** 
+   * @returns true if numer < 0
+   */
+  bool isNegative() const {
+    return mpfr_sgn(this->value) < 0;
+    }
+  
+  /// - -> +, + -> -
+  void negative() {
+    mpfr_neg(this->value, this->value, GMP_RNDD);
     }
 
   /// Floor.
