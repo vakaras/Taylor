@@ -2,6 +2,7 @@
 #define TAYLOR_CPP_EXPRESSION_POWER
 
 #include "expression.h"
+#include "number_exp.h"
 
 /// Expression a^{x}
 class ExpressionPower: public Expression {
@@ -11,12 +12,12 @@ class ExpressionPower: public Expression {
 private:
 
   const Expression 
-    *argument,                          // Expression of power argument.
+    *base,                              // Expression of base.
     *power;                             // Expression of power.
 
 // Methods.
 
-  int getArgumentPrecision(int precision) const {
+  int getBasePrecision(int precision) const {
     // FIXME: Write normal.
     return precision;
     }
@@ -28,8 +29,8 @@ private:
 
 public:
 
-  ExpressionPower(const Expression &_argument, const Expression &_power) {
-    argument = &_argument;
+  ExpressionPower(const Expression &_base, const Expression &_power) {
+    base = &_base;
     power = &_power;
     }
   
@@ -39,53 +40,23 @@ public:
     LOG("POWER");
 #endif
 
-    // TODO: Make refactoring.
     long precision = dec_to_bin(digits);     // TODO: Check if correct.
 
-    long precision_argument = this->getArgumentPrecision(digits);
+    long precision_base = this->getBasePrecision(digits);
     long precision_power = this->getPowerPrecision(digits);
 
-    Number one(1, precision);
+    Number &base = this->base->count(precision_base);
+    Number &power = this->power->count(precision_power);
 
-    Number &number = *(new Number(1, precision));
-                                        // sum
-    Number &argument = this->argument->count(precision_argument);
-    argument -= one;
-                                        // x
-    Number &degree = this->power->count(precision_power);
-                                        // a
-    Number toAdd = Number(1, precision);
-                                        // \frac{a\cdots (a-n+1)}{n!}
-    Number remainder(1, precision);
-    remainder >>= precision;            // 2^{-a}
-
-    int i = 1;
-    while (toAdd.cmpAbs(remainder) > 0) {
-      // TODO: Add check for cases with possibly wrong precision.
-
-      toAdd *= argument;                // \frac%
-                                        // {a\cdots (a-n+2)\cdot x^n}%
-                                        // {(n-1)!}
-      toAdd *= degree;                  // \frac%
-                                        // {a\cdots (a-n+1)\cdot x^n}%
-                                        // {(n-1)!}
-      degree -= one;                    // a-n
-      toAdd /= Number(i++, precision);  // \frac%
-                                        // {a\cdots (a-n+1)\cdot x^n}%
-                                        // {n!}
-      number += toAdd;
-      }
-
-    return number;
+    return exp(power * ln(base));
     }
   
   Expression &clone() const {
     Expression &copy = *(new ExpressionPower(
-          argument->clone(), power->clone()));
+          base->clone(), power->clone()));
     return copy;
     }
   
   };
 
 #endif
-

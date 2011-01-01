@@ -4,16 +4,6 @@
 #include "exceptions.h"
 #include "number.h"
 
-/// Calculates x^{n}
-Number &pow(const Number &x, const Number &n) {
-
-  /*
-   *
-   *To expand on what user923005 wrote, computing pow(x,y) as using Taylor
-series to evaluate exp(y*ln(x)) certainly works to some extent. 
-   */
-  }
-
 /// Calculates e^{x}
 Number &exp(const Number &x) {
 

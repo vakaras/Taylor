@@ -330,7 +330,7 @@ void test_expression_exp() {
 
 void test_expression_ln() {
   cout << "Testing class ExpressionLn. ";
-  cout << endl;
+  //cout << endl;
 
   ExpressionInteger a(1), b(60), c(2000000);
 
@@ -352,7 +352,6 @@ void test_expression_ln() {
   cout << "Ok." << endl;
   }
 
-/*
 void test_expression_power() {
   cout << "Testing class ExpressionPower. ";
   //cout << endl;
@@ -360,19 +359,19 @@ void test_expression_power() {
   ExpressionInteger a(2), b(3);
 
   ExpressionPower c(a, b);
-  //cout << c.asString(32, 10) << endl;
-  assert(c.asString(32, 10) == string("8,0000000000"));
+  //cout << c.asString(32) << endl;
+  assert(c.asString(32) == string("8.000000000000000000000000000000"));
 
   ExpressionInteger d(1), e(2);
   ExpressionDivision f(d, e);
-  //cout << f.asString(32, 10) << endl;
+  //cout << f.asString(32) << endl;
+
   ExpressionPower g(e, f);
-  //cout << g.asString(32, 10) << endl;
-  assert(g.asString(32, 10) == string("1,4139489340"));
+  //cout << g.asString(50) << endl;
+  assert(g.asString(50) == \
+      string("1.414213562373095048801688724209698078569671875377"));
 
-  // FIXME: Should return only correct digits!
-
-  cout << "Check." << endl;
+  cout << "Ok." << endl;
   }
 
 void test_polymorphism() {
@@ -386,38 +385,37 @@ void test_polymorphism() {
     &d = *(new ExpressionInteger(-60)),
     &c = *(new ExpressionSum(a, b)),
     &e = *(new ExpressionSum(c, d)),
-    &f = *(new ExpressionDivision(d, a)),
+    &f = *(new ExpressionDivision(a, d)),
     &g = *(new ExpressionSin(d)),
     &h = *(new ExpressionPower(g, f));
 
 
-  //cout << a.asString(32, 10) << endl;
-  assert(a.asString(32, 10) == string("20,000000000"));
+  //cout << a.asString(32) << endl;
+  assert(a.asString(32) == string("20.00000000000000000000000000000"));
 
-  //cout << b.asString(32, 10) << endl;
-  assert(b.asString(32, 10) == string("30,000000000"));
+  //cout << b.asString(32) << endl;
+  assert(b.asString(32) == string("30.00000000000000000000000000000"));
 
-  //cout << d.asString(32, 10) << endl;
-  assert(d.asString(32, 10) == string("-60,000000000"));
+  //cout << d.asString(32) << endl;
+  assert(d.asString(32) == string("-60.00000000000000000000000000000"));
 
-  //cout << c.asString(32, 10) << endl;
-  assert(c.asString(32, 10) == string("50,000000000"));
+  //cout << c.asString(32) << endl;
+  assert(c.asString(32) == string("50.00000000000000000000000000000"));
 
-  //cout << e.asString(32, 10) << endl;
-  assert(e.asString(32, 10) == string("-10,000000000"));
+  //cout << e.asString(32) << endl;
+  assert(e.asString(32) == string("-10.00000000000000000000000000000"));
 
-  //cout << f.asString(32, 10) << endl;
-  assert(f.asString(32, 10) == string("-3,0000000000"));
+  //cout << f.asString(32) << endl;
+  assert(f.asString(32) == string("-0.3333333333333333333333333333333"));
 
-  //cout << g.asString(32, 10) << endl;
-  assert(g.asString(32, 10) == string("0,30481067311"));
+  //cout << g.asString(32) << endl;
+  assert(g.asString(32) == string("0.3048106211022167056256494654784"));
 
-  //cout << h.asString(32, 10) << endl;
-  assert(h.asString(32, 10) == string("35,310956671"));
+  //cout << h.asString(32) << endl;
+  assert(h.asString(32) == string("1.485901318390314475337311659234"));
 
-  cout << "Check." << endl;
+  cout << "Ok." << endl;
   }
-*/
 
 int main() {
 
@@ -435,8 +433,8 @@ int main() {
   test_expression_cos();
   test_expression_exp();
   test_expression_ln();
-//test_expression_power();
-//test_polymorphism();
+  test_expression_power();
+  test_polymorphism();
 
   return 0;
   }
