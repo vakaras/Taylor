@@ -184,7 +184,7 @@ PythonExpression get_ln(const PythonExpression &expression) {
 #include <boost/python.hpp>
 using namespace boost::python;
 
-BOOST_PYTHON_MODULE(lmath)
+BOOST_PYTHON_MODULE(lmathcpp)
 {
   class_<PythonExpression>("Expression", init<>())
     .def(init<int>())
