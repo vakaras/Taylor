@@ -70,4 +70,18 @@ public:
 
   };
 
+class ValueError: public Exception {
+
+// Methods:
+
+public:
+
+  ValueError(): Exception("Unknown.") {
+    }
+
+  ValueError(const char *_msg): Exception(_msg) {
+    }
+
+  };
+
 #endif

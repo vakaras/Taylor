@@ -42,6 +42,9 @@ Number ataninvint(long x, long precision) {
   }
 
 /// Returns pi/4 as Number with correct at least given decimal diggits.
+/**
+ * This function is not thread safe.
+ */
 const Number &getPi4(long digits) {
 
   long precision = dec_to_bin(digits);
@@ -60,6 +63,9 @@ const Number &getPi4(long digits) {
   }
 
 /// Returns pi/2 as number in given precision.
+/**
+ * This function is not thread safe.
+ */
 const Number &getPi2(long precision) {
 
   static Number *pi = NULL;
@@ -75,6 +81,9 @@ const Number &getPi2(long precision) {
   }
 
 /// Returns pi as number in given precision.
+/**
+ * This function is not thread safe.
+ */
 const Number &getPi(long precision) {
 
   static Number *pi = NULL;

@@ -240,6 +240,15 @@ public:
     mpfr_add(this->value, this->value, other.value, GMP_RNDD);
     this->validate();
     }
+  
+  /// Adds another number to this. 
+  /**
+   * This number precision is used.
+   */
+  void operator += (const long &other) {
+    mpfr_add_si(this->value, this->value, other, GMP_RNDD);
+    this->validate();
+    }
 
   /// Subtracts another number from this. 
   /**
@@ -249,6 +258,16 @@ public:
     mpfr_sub(this->value, this->value, other.value, GMP_RNDD);
     this->validate();
     }
+
+  /// Subtracts another number from this. 
+  /**
+   * This number precision is used.
+   */
+  void operator -= (const long &other) {
+    mpfr_sub_si(this->value, this->value, other, GMP_RNDD);
+    this->validate();
+    }
+
 
   /// Subtracts another number from this.
   /**
@@ -381,8 +400,18 @@ public:
     }
   
   /// Compares this number with other.
+  bool operator >= (const double &other) const {
+    return mpfr_cmp_d(this->value, other) >= 0;
+    }
+  
+  /// Compares this number with other.
   bool operator <= (const Number &other) const {
     return mpfr_cmp(this->value, other.value) <= 0;
+    }
+
+  /// Compares this number with other.
+  bool operator <= (const double &other) const {
+    return mpfr_cmp_d(this->value, other) <= 0;
     }
 
   /// Compares this number absolute value with other number absolute value.

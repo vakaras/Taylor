@@ -7,6 +7,8 @@
 #include "cpp/number_pi.h"
 #include "cpp/expression.h"
 #include "cpp/expression_integer.h"
+#include "cpp/expression_pi.h"
+#include "cpp/expression_e.h"
 #include "cpp/expression_sum.h"
 #include "cpp/expression_subtract.h"
 #include "cpp/expression_negative.h"
@@ -15,6 +17,7 @@
 #include "cpp/expression_sin.h"
 #include "cpp/expression_cos.h"
 #include "cpp/expression_exp.h"
+#include "cpp/expression_ln.h"
 #include "cpp/expression_power.h"
 
 using namespace std;
@@ -127,6 +130,30 @@ void test_expression_integer() {
   ExpressionInteger d(2);
   //cout << d.asString(32) << endl;
   assert(d.asString(32) == string("2.000000000000000000000000000000"));
+
+  cout << "Ok." << endl;
+  }
+
+void test_expression_pi() {
+  cout << "Testing class ExpressionPi. ";
+  //cout << endl;
+
+  ExpressionPi pi;
+  //cout << pi.asString(50) << endl;
+  assert(pi.asString(50) == \
+      string("3.141592653589793238462643383279502884197169399375"));
+
+  cout << "Ok." << endl;
+  }
+
+void test_expression_e() {
+  cout << "Testing class ExpressionE. ";
+  //cout << endl;
+
+  ExpressionE e;
+  //cout << e.asString(50) << endl;
+  assert(e.asString(50) == \
+      string("2.718281828459045235360287471352662497757247093700"));
 
   cout << "Ok." << endl;
   }
@@ -274,29 +301,53 @@ void test_expression_cos() {
 
 void test_expression_exp() {
   cout << "Testing class ExpressionExp. ";
-  cout << endl;
+  //cout << endl;
 
   ExpressionInteger a(1), b(-1), e(60), g(120);
 
   ExpressionExp c(a);
-  cout << c.asString(56) << endl;
+  //cout << c.asString(56) << endl;
   assert(c.asString(56) == \
       string("2.718281828459045235360287471352662497757247093699959575"));
 
   ExpressionExp d(b);
-  cout << d.asString(50) << endl;
+  //cout << d.asString(50) << endl;
   assert(d.asString(50) == \
       string("0.3678794411714423215955237701614608674458111310318"));
 
   ExpressionExp f(e);
-  cout << f.asString(50) << endl;
+  //cout << f.asString(50) << endl;
   assert(f.asString(50) == \
       string("114200738981568428366295718.3144765630198045959556"));
 
   ExpressionExp h(g);
-  cout << h.asString(55) << endl;
+  //cout << h.asString(55) << endl;
   assert(h.asString(55) == \
       string("13041808783936322797338790280986488113446079415755132.7"));
+
+  cout << "Ok." << endl;
+  }
+
+void test_expression_ln() {
+  cout << "Testing class ExpressionLn. ";
+  cout << endl;
+
+  ExpressionInteger a(1), b(60), c(2000000);
+
+  ExpressionLn d(a);
+  //cout << d.asString(56) << endl;
+  assert(d.asString(56) == \
+      string("-0.0000000000000000000000000000000000000000000000000000000"));
+
+  ExpressionLn e(b);
+  //cout << e.asString(50) << endl;
+  assert(e.asString(50) == \
+      string("4.094344562222100684830468813065066480324092180812"));
+
+  ExpressionLn f(c);
+  //cout << f.asString(50) << endl;
+  assert(f.asString(50) == \
+      string("14.50865773852421941352518084956436181368210906613"));
 
   cout << "Ok." << endl;
   }
@@ -373,6 +424,8 @@ int main() {
   test_number();
   test_number_pi();
   test_expression_integer();
+  test_expression_pi();
+  test_expression_e();
   test_expression_sum();
   test_expression_subtract();
   test_expression_negative();
@@ -381,6 +434,7 @@ int main() {
   test_expression_sin();
   test_expression_cos();
   test_expression_exp();
+  test_expression_ln();
 //test_expression_power();
 //test_polymorphism();
 
