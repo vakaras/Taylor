@@ -1,6 +1,8 @@
 #ifndef TAYLOR_CPP_NUMBER_TRIGONOMETRY
 #define TAYLOR_CPP_NUMBER_TRIGONOMETRY
 
+#include <cassert>
+
 #include "number.h"
 #include "number_pi.h"
 
@@ -175,6 +177,9 @@ Number &cos(
       return sin_pi2(x);
       }
     }
+
+  assert(0);                            // Unreachable code.
+  return *(new Number(0, 0));
   }
 
 #endif

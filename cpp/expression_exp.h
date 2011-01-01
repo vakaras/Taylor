@@ -33,7 +33,6 @@ public:
   Number &count(long digits) const {
 
     long precision_argument = this->getArgumentPrecision(digits);
-    long precision = getEPrecision(digits);
 
     Number &number = argument->count(precision_argument);
 

@@ -40,10 +40,12 @@ public:
     LOG("POWER");
 #endif
 
-    long precision = dec_to_bin(digits);     // TODO: Check if correct.
+    //long precision = dec_to_bin(digits);     
 
     long precision_base = this->getBasePrecision(digits);
+                                        // TODO: Check if correct.
     long precision_power = this->getPowerPrecision(digits);
+                                        // TODO: Check if correct.
 
     Number &base = this->base->count(precision_base);
     Number &power = this->power->count(precision_power);

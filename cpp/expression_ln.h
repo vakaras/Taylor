@@ -34,8 +34,7 @@ public:
   Number &count(long digits) const {
 
     long precision_argument = this->getArgumentPrecision(digits);
-    long precision = dec_to_bin(digits);      
-                                        // Check if works.
+                                        // TODO: Check if works.
 
     Number &number = argument->count(precision_argument);
 
