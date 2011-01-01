@@ -52,11 +52,19 @@ public:
     this->validate();
     }
 
+  /// Copy number.
   Number(const Number &number) {
 #ifdef DEBUG
     LOG("COPYING NUMBER");
 #endif
     this->precision = number.precision;
+    mpfr_init2(this->value, this->precision);
+    mpfr_set(this->value, number.value, GMP_RNDD);
+    }
+
+  /// Copy number with new precision.
+  Number(const Number &number, long _precision) {
+    this->precision = _precision;
     mpfr_init2(this->value, this->precision);
     mpfr_set(this->value, number.value, GMP_RNDD);
     }

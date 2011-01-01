@@ -14,6 +14,7 @@
 #include "cpp/expression_division.h"
 #include "cpp/expression_sin.h"
 #include "cpp/expression_cos.h"
+#include "cpp/expression_exp.h"
 #include "cpp/expression_power.h"
 
 using namespace std;
@@ -271,6 +272,35 @@ void test_expression_cos() {
   cout << "Check." << endl;
   }
 
+void test_expression_exp() {
+  cout << "Testing class ExpressionExp. ";
+  cout << endl;
+
+  ExpressionInteger a(1), b(-1), e(60), g(120);
+
+  ExpressionExp c(a);
+  cout << c.asString(56) << endl;
+  assert(c.asString(56) == \
+      string("2.718281828459045235360287471352662497757247093699959575"));
+
+  ExpressionExp d(b);
+  cout << d.asString(50) << endl;
+  assert(d.asString(50) == \
+      string("0.3678794411714423215955237701614608674458111310318"));
+
+  ExpressionExp f(e);
+  cout << f.asString(50) << endl;
+  assert(f.asString(50) == \
+      string("114200738981568428366295718.3144765630198045959556"));
+
+  ExpressionExp h(g);
+  cout << h.asString(55) << endl;
+  assert(h.asString(55) == \
+      string("13041808783936322797338790280986488113446079415755132.7"));
+
+  cout << "Ok." << endl;
+  }
+
 /*
 void test_expression_power() {
   cout << "Testing class ExpressionPower. ";
@@ -350,6 +380,7 @@ int main() {
   test_expression_division();
   test_expression_sin();
   test_expression_cos();
+  test_expression_exp();
 //test_expression_power();
 //test_polymorphism();
 
