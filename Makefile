@@ -4,7 +4,7 @@ build:
 	python setup.py build
 
 link: 
-	ln -s build/lib.linux-x86_64-2.6/*.so .
+	ln -s build/lib.*/*.so .
 
 test: 
 	python test.py 
