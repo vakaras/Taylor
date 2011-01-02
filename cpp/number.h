@@ -195,18 +195,21 @@ public:
     // FIXME: Not DRY code.
 
     mpfr_exp_t exp = mpfr_get_exp(this->value);
-    long decExp = bin_to_dec(exp);
+    long decExp = bin_to_dec(exp);      // Length of integer part of number
+                                        // in decimal digits.
     long precision;
 
-    if (mpfr_zero_p(this->value)) {
-      decExp = 0;
+    //std::cout << exp << '\t' << decExp << std::endl;
+
+    if (mpfr_zero_p(this->value) || decExp <= 0) {
+      decExp = 1;
       }
 
     if (width <= decExp) {
       throw FormattingError("Given width is too small.");
       }
     else {
-      precision = width - 1 - decExp;
+      precision = width - decExp;
       }
 
     char *representation;

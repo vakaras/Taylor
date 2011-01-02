@@ -106,7 +106,8 @@ void test_number_pi() {
   Number pi(getPi(55));
   //cout << "\"" << pi.asFormatedString(55) << '\"' << endl;
   assert(pi.asFormatedString(55) == \
-      string("3.14159265358979323846264338327950288419716939937510582"));
+      string("3.141592653589793238462643383279502884197169399375105821"));
+  // wolfram: 3.14159265358979323846264338327950288419716939937510582097494
 
   cout << "Ok." << endl;
   }
@@ -121,15 +122,15 @@ void test_expression_integer() {
 
   ExpressionInteger b(20);
   //cout << b.asString(32) << endl;
-  assert(b.asString(32) == string("20.00000000000000000000000000000"));
+  assert(b.asString(32) == string("20.000000000000000000000000000000"));
 
   ExpressionInteger c(-20);
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("-20.00000000000000000000000000000"));
+  assert(c.asString(32) == string("-20.000000000000000000000000000000"));
 
   ExpressionInteger d(2);
   //cout << d.asString(32) << endl;
-  assert(d.asString(32) == string("2.000000000000000000000000000000"));
+  assert(d.asString(32) == string("2.0000000000000000000000000000000"));
 
   cout << "Ok." << endl;
   }
@@ -141,7 +142,8 @@ void test_expression_pi() {
   ExpressionPi pi;
   //cout << pi.asString(50) << endl;
   assert(pi.asString(50) == \
-      string("3.141592653589793238462643383279502884197169399375"));
+      string("3.1415926535897932384626433832795028841971693993751"));
+  // wolfram: 3.14159265358979323846264338327950288419716939937510582097494
 
   cout << "Ok." << endl;
   }
@@ -153,7 +155,8 @@ void test_expression_e() {
   ExpressionE e;
   //cout << e.asString(50) << endl;
   assert(e.asString(50) == \
-      string("2.718281828459045235360287471352662497757247093700"));
+      string("2.7182818284590452353602874713526624977572470937000"));
+  // wolfram: 2.718281828459045235360287471352662497757247093699959574966
 
   cout << "Ok." << endl;
   }
@@ -166,11 +169,11 @@ void test_expression_sum() {
 
   ExpressionSum c(a, b);
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("50.00000000000000000000000000000"));
+  assert(c.asString(32) == string("50.000000000000000000000000000000"));
 
   ExpressionSum e(c, d);
   //cout << e.asString(32) << endl;
-  assert(e.asString(32) == string("-10.00000000000000000000000000000"));
+  assert(e.asString(32) == string("-10.000000000000000000000000000000"));
 
   cout << "Ok." << endl;
   }
@@ -183,11 +186,11 @@ void test_expression_subtract() {
 
   ExpressionSubtract c(a, b);
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("-10.00000000000000000000000000000"));
+  assert(c.asString(32) == string("-10.000000000000000000000000000000"));
 
   ExpressionSubtract e(c, d);
   //cout << e.asString(32) << endl;
-  assert(e.asString(32) == string("50.00000000000000000000000000000"));
+  assert(e.asString(32) == string("50.000000000000000000000000000000"));
 
   cout << "Ok." << endl;
   }
@@ -200,11 +203,11 @@ void test_expression_negative() {
 
   ExpressionNegative c(a);
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("-20.00000000000000000000000000000"));
+  assert(c.asString(32) == string("-20.000000000000000000000000000000"));
 
   ExpressionNegative d(b);
   //cout << d.asString(32) << endl;
-  assert(d.asString(32) == string("30.00000000000000000000000000000"));
+  assert(d.asString(32) == string("30.000000000000000000000000000000"));
 
   cout << "Ok." << endl;
   }
@@ -217,11 +220,11 @@ void test_expression_multiplication() {
 
   ExpressionMultiplication c(a, b);
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("6.000000000000000000000000000000"));
+  assert(c.asString(32) == string("6.0000000000000000000000000000000"));
 
   ExpressionMultiplication e(c, d);
   //cout << e.asString(32) << endl;
-  assert(e.asString(32) == string("-36.00000000000000000000000000000"));
+  assert(e.asString(32) == string("-36.000000000000000000000000000000"));
 
   cout << "Ok." << endl;
   }
@@ -242,7 +245,7 @@ void test_expression_division() {
 
   ExpressionMultiplication f(c, b);
   //cout << f.asString(32) << endl;
-  assert(f.asString(32) == string("2.000000000000000000000000000000"));
+  assert(f.asString(32) == string("2.0000000000000000000000000000000"));
 
   cout << "Ok." << endl;
   }
@@ -267,7 +270,7 @@ void test_expression_sin() {
   //cout << f.asString(50) << endl;
   assert(f.asString(50) == \
       string("-0.6557143155634700047626098527827476029967326202468"));
-  //          -0.65571431556347000476260985278274760299673262024692362938
+  // wolfram: -0.65571431556347000476260985278274760299673262024692362938
   // FIXME: Paskutinis skaitmuo nesutampa!
 
   cout << "Check." << endl;
@@ -293,7 +296,7 @@ void test_expression_cos() {
   //cout << f.asString(50) << endl;
   assert(f.asString(50) == \
       string("0.7550090968757463112230154096399955740150930942374"));
-  //          0.75500909687574631122301540963999557401509309423726368324
+  // wolfram: 0.75500909687574631122301540963999557401509309423726368324
   // FIXME: Paskutinis skaitmuo nesutampa!
 
   cout << "Check." << endl;
@@ -308,7 +311,8 @@ void test_expression_exp() {
   ExpressionExp c(a);
   //cout << c.asString(56) << endl;
   assert(c.asString(56) == \
-      string("2.718281828459045235360287471352662497757247093699959575"));
+      string("2.7182818284590452353602874713526624977572470936999595750"));
+  // wolfram: 2.718281828459045235360287471352662497757247093699959574966
 
   ExpressionExp d(b);
   //cout << d.asString(50) << endl;
@@ -318,12 +322,14 @@ void test_expression_exp() {
   ExpressionExp f(e);
   //cout << f.asString(50) << endl;
   assert(f.asString(50) == \
-      string("114200738981568428366295718.3144765630198045959556"));
+      string("114200738981568428366295718.31447656301980459595564"));
+  // wolfram: 114200738981568428366295718.31447656301980459595563958
 
   ExpressionExp h(g);
   //cout << h.asString(55) << endl;
   assert(h.asString(55) == \
-      string("13041808783936322797338790280986488113446079415755132.7"));
+      string("13041808783936322797338790280986488113446079415755132.73"));
+  // wolfram: 13041808783936322797338790280986488113446079415755132.72831
 
   cout << "Ok." << endl;
   }
@@ -342,12 +348,14 @@ void test_expression_ln() {
   ExpressionLn e(b);
   //cout << e.asString(50) << endl;
   assert(e.asString(50) == \
-      string("4.094344562222100684830468813065066480324092180812"));
+      string("4.0943445622221006848304688130650664803240921808118"));
+  // wolfram: 4.094344562222100684830468813065066480324092180811777681888
 
   ExpressionLn f(c);
   //cout << f.asString(50) << endl;
   assert(f.asString(50) == \
-      string("14.50865773852421941352518084956436181368210906613"));
+      string("14.508657738524219413525180849564361813682109066133"));
+  // wolfram: 14.50865773852421941352518084956436181368210906613289311032
 
   cout << "Ok." << endl;
   }
@@ -360,7 +368,7 @@ void test_expression_power() {
 
   ExpressionPower c(a, b);
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("8.000000000000000000000000000000"));
+  assert(c.asString(32) == string("8.0000000000000000000000000000000"));
 
   ExpressionInteger d(1), e(2);
   ExpressionDivision f(d, e);
@@ -369,7 +377,8 @@ void test_expression_power() {
   ExpressionPower g(e, f);
   //cout << g.asString(50) << endl;
   assert(g.asString(50) == \
-      string("1.414213562373095048801688724209698078569671875377"));
+      string("1.4142135623730950488016887242096980785696718753769"));
+  // wolfram: 1.414213562373095048801688724209698078569671875376948073176
 
   cout << "Ok." << endl;
   }
@@ -391,19 +400,19 @@ void test_polymorphism() {
 
 
   //cout << a.asString(32) << endl;
-  assert(a.asString(32) == string("20.00000000000000000000000000000"));
+  assert(a.asString(32) == string("20.000000000000000000000000000000"));
 
   //cout << b.asString(32) << endl;
-  assert(b.asString(32) == string("30.00000000000000000000000000000"));
+  assert(b.asString(32) == string("30.000000000000000000000000000000"));
 
   //cout << d.asString(32) << endl;
-  assert(d.asString(32) == string("-60.00000000000000000000000000000"));
+  assert(d.asString(32) == string("-60.000000000000000000000000000000"));
 
   //cout << c.asString(32) << endl;
-  assert(c.asString(32) == string("50.00000000000000000000000000000"));
+  assert(c.asString(32) == string("50.000000000000000000000000000000"));
 
   //cout << e.asString(32) << endl;
-  assert(e.asString(32) == string("-10.00000000000000000000000000000"));
+  assert(e.asString(32) == string("-10.000000000000000000000000000000"));
 
   //cout << f.asString(32) << endl;
   assert(f.asString(32) == string("-0.3333333333333333333333333333333"));
@@ -412,7 +421,8 @@ void test_polymorphism() {
   assert(g.asString(32) == string("0.3048106211022167056256494654784"));
 
   //cout << h.asString(32) << endl;
-  assert(h.asString(32) == string("1.485901318390314475337311659234"));
+  assert(h.asString(32) == string("1.4859013183903144753373116592339"));
+  // wolfram:                      1.485901318390314475337311659233869962
 
   cout << "Ok." << endl;
   }
