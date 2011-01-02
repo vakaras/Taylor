@@ -370,15 +370,30 @@ void test_expression_power() {
   //cout << c.asString(32) << endl;
   assert(c.asString(32) == string("8.0000000000000000000000000000000"));
 
-  ExpressionInteger d(1), e(2);
-  ExpressionDivision f(d, e);
+  ExpressionInteger d(1), r(2);
+  ExpressionDivision f(d, r);
   //cout << f.asString(32) << endl;
 
-  ExpressionPower g(e, f);
+  ExpressionPower g(r, f);
   //cout << g.asString(50) << endl;
   assert(g.asString(50) == \
       string("1.4142135623730950488016887242096980785696718753769"));
   // wolfram: 1.414213562373095048801688724209698078569671875376948073176
+
+  ExpressionExp e(ExpressionInteger(120));
+                                        // e^120
+  ExpressionSum h(e, ExpressionInteger(2));
+                                        // e^120 + 2
+  ExpressionDivision i(ExpressionInteger(1), ExpressionInteger(120));
+                                        // 1/120
+  ExpressionPower j(h, i);              // (e^120 + 2)^(1/120)
+
+  //cout << j.asString(60) << endl;
+  assert(j.asString(60) == \
+      string(
+        "2.71828182845904523536028747135266249775724709369995957844077"));
+  // wolfram:
+  //     2.71828182845904523536028747135266249775724709369995957844077236
 
   cout << "Ok." << endl;
   }
