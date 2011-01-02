@@ -2,3 +2,12 @@ build/
 *.so
 old/
 prog
+doc/main.aux
+doc/main.log
+doc/main.out
+doc/main.py
+doc/main.py.out
+doc/main.py.err
+doc/main.toc
+doc/latex.py
+*.pdf
