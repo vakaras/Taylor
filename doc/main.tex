@@ -1,0 +1,38 @@
+\documentclass[a4paper]{mathdoc}
+
+\usepackage{fontspec}
+\usepackage{amssymb}
+\usepackage{xltxtra}
+\usepackage[lithuanian]{babel}
+\usepackage{indentfirst}
+\usepackage[]{hyperref}
+\usepackage[]{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{alltt}
+
+\hypersetup{pdfborder={0 0 0 0}}
+
+\defaultfontfeatures{Mapping=tex-text}
+
+% Aibių žymėjimai.
+\newcommand\RSET{\mathop{\mathbb{R}}}
+\newcommand\NSET{\mathop{\mathbb{N}}}
+
+% arctg, arcctg, tg, ctg, sign
+\newcommand\arctg{\mathop{\text{arctg}}}
+\newcommand\arcctg{\mathop{\text{arcctg}}}
+\newcommand\tg{\mathop{\text{tg}}}
+\newcommand\ctg{\mathop{\text{ctg}}}
+\newcommand\sign{\mathop{\text{sign}}}
+
+\begin{document}
+
+\input{title.tex}
+%\input{./abstract.tex}
+
+\tableofcontents
+\input{introduction.tex}
+
+\end{document}

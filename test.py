@@ -33,3 +33,8 @@ print u'exp(1)      = ', exp(1).asString(32)
 print u'ln(1)       = ', ln(1).asString(32)
 print u' a ^ b      = ', (a ^ b).asString(32)
 print u' a ^ 2      = ', (a ^ b).asString(32)
+
+a = (a + 1)/10
+print a.asString(32)
+print (a^20).asString(32)
+print (a^20).asString(5)
