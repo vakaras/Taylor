@@ -2,8 +2,10 @@ default: fresh
 
 # Sugeneruoti straipsnį.
 konspektas.pdf:
-	xelatex main.tex
-	xelatex main.tex
+	xelatex -shell-escape main.tex
+	bibtex main
+	xelatex -shell-escape main.tex
+	xelatex -shell-escape main.tex
 	mv main.pdf aprašymas.pdf
 
 fresh: clear konspektas.pdf

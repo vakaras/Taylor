@@ -2,4 +2,138 @@
 
 \section{Idėja}
 
-Užduotis įgyvendinta 
+Kadangi išraiškų interpretatoriaus rašymas yra sudėtinga bei ne esminė
+procedūra, buvo nuspręsta pasinaudoti kuriuo nors iš jau egzistuojančių.
+Taip buvo nuspręsta rašyti biblioteką Python programavimo kalbai. Kadangi
+greitis yra itin svarbus, tai pati biblioteka buvo realizuota naudojant
+C++ programavimo kalbą ir prijungta pasinaudojus \verb|Boost.Python| 
+\cite{boost_python} biblioteką.
+
+Pačią biblioteką pagal atsakomybes galima suskirstyti į tris dalis:
+\begin{enumerate}
+  \item klasės ir funkcijos atsakingos už veiksmus su didelio tikslumo
+    skaičiais;
+  \item klasės atsakingos už teisingą išraiškų apdorojimą;
+  \item klasės ir funkcijos atsakingos už bibliotekos Python sąsają.
+\end{enumerate}
+Pirmosios dvi dalys realizuotos C++ programavimo kalba, o trečioji
+C++ ir Python.
+
+\section{Veiksmai su didelio tikslumo skaičiais}
+
+Šia dalį sudaro C++ klasė \verb|Number|, kuri realizuoja didelio tikslumo
+slankaus kablelio skaičių bei tiesiogiai ją naudojančios matematinės
+funkcijos: $\sin$, $\cos$, $\exp$ ir t.t. Klasė \verb|Number| yra 
+apgaubiančioji klasė, kuri leidžia naudotis \verb|MPFR| \cite{mpfr} 
+bibliotekos funkcijoms, objektinei paradigmai įprastu būdu.
+
+Toliau skyreliuose aprašytos esminės idėjos, kaip buvo realizuotos kai
+kurios funkcijos.
+
+% Ji yra apgaubiančioji klasė \verb|MPFR|
+% \cite{mpfr} bibliotekos funkcijoms.
+
+% Šiai bibliotekos daliai priklauso klasė \verb|Number|\footnote{Klasė yra
+% faile \verb|cpp/number.h|.} bei įvairios pagalbinės 
+% funkcijos\footnote{Funkcijos yra failuose \verb|cpp/number_*.h|.}.
+% Klasė \verb|Number| yra apgaubianti klasė, leidžianti naudotis 
+% \verb|MPFR| \cite{mpfr} didelio tikslumo skaičių biblioteka, įprastu 
+% objektinei paradigmai būdu. 
+
+\subsection{$\pi$ reikšmės apskaičiavimas}
+
+Yra žinoma matematinė tapatybė:
+
+\begin{equation}
+  \frac{\pi}{4} = \arctg 1.
+  \label{pi_1}
+\end{equation}
+
+Taigi norėdami apskaičiuoti $\pi$ reikšmę norimu tikslumu, turime 
+apskaičiuoti $\arctg 1$ reikšmę ir padauginti iš $4$. Išskleiskime
+$\arctg x$ Teiloro eilute taške $0$:
+
+\begin{align*}
+  (\arctg x)'|_{x=0} &= \frac{1}{1 + x^2}|_{x=0} &= 1 \\
+  (\arctg x)''|_{x=0} &= -\frac{2 x}{(1 + x^2)^2}|_{x=0} &= 0 \\
+  (\arctg x)'''|_{x=0} &=%
+    \frac{8 x^2}{(x^2 + 1)^3} - \frac{2}{(x^2 + 1)^2} &= -2 \\
+  \cdots\\
+  (\arctg x)^{(2k)}|_{x=0} &= \cdots &= 0 \\
+  (\arctg x)^{(2k+1)}|_{x=0} &= \cdots &= (-1)^{k+1}(2k)! 
+\end{align*}
+
+\begin{equation}
+  \arctg x = x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7}%
+    + \cdots
+  \label{pi_2}
+\end{equation}
+
+Gavome $\arctg x$ skleidinį laipsnine eilute. Taigi, į jį galime 
+tiesiog įsistatyti $x = 1$ ir galėsime apskaičiuoti $\frac{\pi}{4}$ reikšmę
+norimu tikslumu. Problema yra tame, kad kai $x$ artimas 1, tai ši
+eilutė konverguoja labai lėtai, todėl reikės labai daug dėmenų, kad
+pasiektume norimą tikslumą. Šią problemą galime išspręsti pasinaudoję
+tokia matematine tapatybe \cite{fractal_pi}: % TODO Įrodyti tapatybę.
+\begin{equation}
+  \arctg 1 = 4 \arctg \frac{1}{5} - \arctg \frac{1}{239}
+  \label{pi_3}
+\end{equation}.
+% TODO Aprėžti liekamąjį narį.
+
+\subsection{Trigonometrinių funkcijų reikšmių apskaičiavimas}
+
+Išskleiskime $\sin x$ Teiloro eilute:
+
+\begin{align*}
+  (\sin x)'|_{x=0} &= \cos x|_{x=0} &= 1 \\
+  (\sin x)''|_{x=0} &= -\sin x|_{x=0} &= 0 \\
+  (\sin x)''' |_{x=0} &= -\cos x|_{x=0} &= -1 \\
+  \cdots \\
+  (\sin x)^{(2k)} &= \cdots &= 0 \\
+  (\sin x)^{(2k+1)} &= \cdots &= (-1)^{(k)}
+\end{align*}
+
+\begin{equation}
+  \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
+  \label{sin_1}
+\end{equation}
+
+Gavome $\sin x$ skleidinį. Pabandykime įvertinti liekamąjį narį, jei
+skaičiuosime taške $x_{0}$ ir sumuosime $n$ dėmenų:
+\begin{align}
+  r_{n}(x_{0}) %
+  &= \frac{f^{(n+1)}(c)}{(n+1)!} x_{0}^{n+1} \\
+  &= \frac{\sin^{(n+1)}(c)}{(n+1)!} x_{0}^{n+1} \\
+  &\leq \frac{x_{0}^{n+1}}{(n+1)!} & \text{jei } |x_{0}| < 1 \\
+  &\leq \frac{x_{0}^{n}}{n!} 
+\end{align}
+Taigi, kai argumentas priklauso intervalui $(1; 1)$, rezultato norimą
+tikslumą gausime kai skaičiuosime iki kol pridedamas narys pasidarys
+mažesnis už norimą tikslumą. Taip pat pastebėkime, kad kuo argumentas
+mažesnis tuo seka greičiau konverguoja. Jei turime argumentą 
+$x (x > 0)$ (kadangi $\sin$ yra nelyginė funkcija, tai neigiamiems 
+argumentams reikės tik pakeisti rezultato ženklą) tai jį „sumažinti“ 
+taip, kad jis būtų iš intervalo $[-\frac{\pi}{4}; \frac{\pi}{4}]$ galime 
+tokiu būdu:
+\begin{enumerate}
+  \item jei $y := \left\lfloor \frac{x}{2\pi} \right\rfloor \cdot (2\pi)$, 
+    tai $y \in [0; 2\pi]$;
+  \item jei $y \in [0; \frac{\pi}{4})$, tai $\sin x = \sin y$;
+  \item jei $y \in [\frac{\pi}{4}; \frac{3\pi}{4})$, tai $\sin x = \cos y$;
+  \item jei $y \in [\frac{3\pi}{4}; 1\frac{1}{4}\pi)$, tai 
+    $\sin x = \sin (\pi - y)$;
+  \item jei $y \in [1\frac{1}{4}\pi; 1\frac{3}{4}\pi)$, tai
+    $\sin x = -\cos (y - 2\pi)$;
+  \item jei $y \in [1\frac{3}{4}\pi; 2\pi]$, tai
+    $\sin x = \sin (y - 2\pi)$.
+\end{enumerate}
+
+$\cos$ reikšmę norimu tikslumu galime apskaičiuoti analogišku būdu.
+
+\subsection{Eksponentės ir natūrinio logaritmo reikšmės apskaičiavimas}
+
+\section{Išraiškų apdorojimas}
+
+\section{Sąsaja}
+

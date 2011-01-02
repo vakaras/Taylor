@@ -14,3 +14,9 @@ prog: clean
 
 clean:
 	rm -f prog
+
+latex:
+	rm -rf doc/lmath
+	mkdir -p doc/lmath
+	cp lmath.py doc/lmath/__init__.py
+	cp build/lib.*/lmathcpp.so doc/lmath/

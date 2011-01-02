@@ -5,9 +5,14 @@ prog
 doc/main.aux
 doc/main.log
 doc/main.out
+doc/main.bbl
+doc/main.blg
 doc/main.py
+doc/main.tmp.py
 doc/main.py.out
 doc/main.py.err
 doc/main.toc
 doc/latex.py
 *.pdf
+doc/lmath
+
