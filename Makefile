@@ -13,7 +13,7 @@ prog: clean
 	g++ -g main.cpp -lmpfr -lgmp -o prog
 
 clean:
-	rm -f prog
+	rm -rf prog build
 
 latex:
 	rm -rf doc/lmath
