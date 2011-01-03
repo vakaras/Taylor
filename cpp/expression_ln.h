@@ -46,6 +46,12 @@ public:
     return copy;
     }
 
+  std::string latex() const {
+    std::string repr = std::string(" \\ln ");
+    repr += argument->latex();
+    return repr;
+    }
+
   };
 
 #endif

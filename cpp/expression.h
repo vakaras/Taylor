@@ -20,8 +20,7 @@ public:
   virtual Number &count(long precision) const = 0;
 
   /// Returns latex math mode representation of the expression.
-  //virtual std::string &latex() const = 0;
-  //                                    TODO
+  virtual std::string latex() const = 0;
   
   /// Copy constructor.
   virtual Expression &clone() const = 0;

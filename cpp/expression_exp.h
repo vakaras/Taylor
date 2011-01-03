@@ -44,6 +44,12 @@ public:
     return copy;
     }
 
+  std::string latex() const {
+    std::string repr = std::string(" e^{ ");
+    repr += argument->latex() + " } ";
+    return repr;
+    }
+  
   };
 
 #endif

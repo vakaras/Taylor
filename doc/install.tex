@@ -67,12 +67,12 @@ kartu su paketu (aplankas \verb|lmath|) į \LaTeX dokumento išeities
 tekstų pagrindinį katalogą reikia nukopijuoti ir failą 
 \verb|doc/python.sty|. Tada dokumento preambulėje pridėjus
 komandą \verb|\usepackage{python}|, į patį dokumentą galima bus pridėti
-kreipinius į \verb|lmath| biblioteką: %TODO Pridėti LaTeX
+kreipinius į \verb|lmath| biblioteką: 
 \begin{lstlisting}[language=tex]
   \begin{equation*}
     \begin{python}%
   from lmath import pi
-  print pi.asString(32)
+  print pi.latex(), '=', pi.asString(32)
     \end{python}
   \end{equation*}
 \end{lstlisting}
@@ -82,6 +82,6 @@ Sukompiliuotas rezultatas atrodytų šitaip:
 \begin{equation*}
   \begin{python}%
 from lmath import pi
-print pi.asString(32)
+print pi.latex(), '=', pi.asString(32)
   \end{python}
 \end{equation*}

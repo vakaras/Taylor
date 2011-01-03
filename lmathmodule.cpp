@@ -54,6 +54,10 @@ public:
     return this->expression->asString(digits);
     }
 
+  std::string latex() {
+    return this->expression->latex();
+    }
+
   PythonExpression &operator + (const PythonExpression &other) const {
 
     Expression *expr = new ExpressionSum(
@@ -190,6 +194,7 @@ BOOST_PYTHON_MODULE(lmathcpp)
   class_<PythonExpression>("Expression", init<>())
     .def(init<int>())
     .def("asString", &PythonExpression::asString)
+    .def("latex", &PythonExpression::latex)
     .def(self + self)
     .def(self + long())
     .def(self - self)

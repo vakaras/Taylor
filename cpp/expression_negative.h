@@ -36,6 +36,12 @@ public:
     return copy;
     }
   
+  std::string latex() const {
+    std::string repr = std::string(" \\left( - ");
+    repr += expression->latex() + " \\right) ";
+    return repr;
+    }
+
   };
 
 #endif

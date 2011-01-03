@@ -53,6 +53,13 @@ public:
     return copy;
     }
   
+  std::string latex() const {
+    std::string repr = std::string(" \\left( ");
+    repr += " \\frac{ " + numerator->latex() + " }";
+    repr += "{ " + denominator->latex() + " } \\right) ";
+    return repr;
+    }
+
   };
 
 #endif

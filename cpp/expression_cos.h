@@ -54,6 +54,12 @@ public:
     Expression &copy = *(new ExpressionCos(argument->clone()));
     return copy;
     }
+
+  std::string latex() const {
+    std::string repr = std::string(" \\cos ");
+    repr += argument->latex();
+    return repr;
+    }
   
   };
 

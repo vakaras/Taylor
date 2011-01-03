@@ -59,6 +59,12 @@ public:
     return copy;
     }
   
+  std::string latex() const {
+    std::string repr = std::string(" ");
+    repr += base->latex() + " ^{" + power->latex() + " } ";
+    return repr;
+    }
+  
   };
 
 #endif

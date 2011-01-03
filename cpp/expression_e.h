@@ -26,6 +26,10 @@ public:
     Expression &copy = *(new ExpressionE());
     return copy;
     }
+
+  std::string latex() const {
+    return std::string(" e ");
+    }
   
   };
 

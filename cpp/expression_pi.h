@@ -27,6 +27,10 @@ public:
     return copy;
     }
 
+  std::string latex() const {
+    return std::string(" \\pi ");
+    }
+
   };
 
 #endif

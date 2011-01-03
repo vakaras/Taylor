@@ -40,6 +40,12 @@ public:
     return copy;
     }
 
+  std::string latex() const {
+    char a[((int) (2.5 * ((double) sizeof(value)))) + 2];
+    sprintf(a, "%ld", value);
+    return std::string(a);
+    }
+
   };
 
 #endif

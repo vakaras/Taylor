@@ -55,6 +55,12 @@ public:
     return copy;
     }
 
+  std::string latex() const {
+    std::string repr = std::string(" \\sin ");
+    repr += argument->latex();
+    return repr;
+    }
+
   };
 
 #endif

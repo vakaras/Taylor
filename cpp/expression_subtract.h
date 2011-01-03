@@ -40,6 +40,12 @@ public:
     return copy;
     }
   
+  std::string latex() const {
+    std::string repr = std::string(" \\left( ");
+    repr += left->latex() + " - " + right->latex() + " \\right) ";
+    return repr;
+    }
+
   };
 
 #endif
