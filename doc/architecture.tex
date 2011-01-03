@@ -2,7 +2,7 @@
 
 \section{Idėja}
 
-Kadangi išraiškų interpretatoriaus rašymas yra sudėtinga bei ne esminė
+Kadangi išraiškų interpretatoriaus rašymas yra sudėtinga bei neesminė
 procedūra, buvo nuspręsta pasinaudoti kuriuo nors iš jau egzistuojančių.
 Taip buvo nuspręsta rašyti biblioteką Python programavimo kalbai. Kadangi
 greitis yra itin svarbus, tai pati biblioteka buvo realizuota naudojant
@@ -126,22 +126,22 @@ skaičiuosime taške $x_{0}$ ir sumuosime $n$ dėmenų:
   &\leq \frac{x_{0}^{n}}{n!} 
 \end{align}
 Taigi, kai argumentas priklauso intervalui $(1; 1)$, rezultato norimą
-tikslumą gausime kai skaičiuosime iki kol pridedamas narys pasidarys
+tikslumą gausime, kai skaičiuosime iki kol pridedamas narys pasidarys
 mažesnis už norimą tikslumą. Taip pat pastebėkime, kad kuo argumentas
-mažesnis tuo seka greičiau konverguoja. Jei turime argumentą 
+mažesnis, tuo seka greičiau konverguoja. Jei turime argumentą 
 $x (x > 0)$ (kadangi $\sin$ yra nelyginė funkcija, tai neigiamiems 
-argumentams reikės tik pakeisti rezultato ženklą) tai jį „sumažinti“ 
-taip, kad jis būtų iš intervalo $[-\frac{\pi}{4}; \frac{\pi}{4}]$ galime 
+argumentams reikės tik pakeisti rezultato ženklą), tai jį „sumažinti“ 
+taip, kad jis būtų iš intervalo $[-\frac{\pi}{4}; \frac{\pi}{4}]$, galime 
 tokiu būdu:
 \begin{enumerate}
-  \item jei $y := \left\lfloor \frac{x}{2\pi} \right\rfloor \cdot (2\pi)$, 
+  \item jei $y := x - \left\lfloor \frac{x}{2\pi} \right\rfloor \cdot (2\pi)$, 
     tai $y \in [0; 2\pi]$;
   \item jei $y \in [0; \frac{\pi}{4})$, tai $\sin x = \sin y$;
-  \item jei $y \in [\frac{\pi}{4}; \frac{3\pi}{4})$, tai $\sin x = \cos y$;
+  \item jei $y \in [\frac{\pi}{4}; \frac{3\pi}{4})$, tai $\sin x = \cos (y - \frac{\pi}{2})$;
   \item jei $y \in [\frac{3\pi}{4}; 1\frac{1}{4}\pi)$, tai 
     $\sin x = \sin (\pi - y)$;
   \item jei $y \in [1\frac{1}{4}\pi; 1\frac{3}{4}\pi)$, tai
-    $\sin x = -\cos (y - 2\pi)$;
+    $\sin x = -\cos (y - 1\frac{1}{2}\pi)$;
   \item jei $y \in [1\frac{3}{4}\pi; 2\pi]$, tai
     $\sin x = \sin (y - 2\pi)$.
 \end{enumerate}
