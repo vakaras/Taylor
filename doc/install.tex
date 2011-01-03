@@ -8,6 +8,15 @@ kaip paruošti biblioteką naudojimui \verb|Ubuntu| sistemoje.
 
 \section{Kompiliavimas \emph{Ubuntu} sistemoje}
 
+Visus bibliotekos kompiliavimui reikalingus paketus galima įdiegti įvykdžius
+komandą:
+\begin{lstlisting}[language=bash]
+  sudo apt-get install \
+    build-essential python-dev \
+    libboost-dev libboost-python-dev boost-build \
+    libmpfr-dev
+\end{lstlisting}
+
 Pirmiausia reikia nusikopijuoti išeities tekstus į vietą, kur naudotojas
 turi rašymo teises. Tai galima padaryti arba tiesiog nukopijuojant
 iš \verb|CD|, arba jei sistemoje yra įdiegta \verb|Git| versijų kontrolės
