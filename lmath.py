@@ -44,3 +44,9 @@ def ln(x):
     if isinstance(x, int):
         x = Expression(x)
     return _ln(x)
+
+def latex_show_as_aligned(rows):
+    """ Returns rows formated in LaTeX align* environment.
+    """
+    env = r'\begin{align*}%s\end{align*}'
+    return env%(r'\\'.join([r'&'.join(row) for row in rows]))

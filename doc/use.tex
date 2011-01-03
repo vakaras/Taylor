@@ -1,1 +1,149 @@
 \chapter{Naudojimosi pavyzdžiai}
+
+Pagrindinė bibliotekos klasė yra \verb|Expression|: 
+\begin{lstlisting}[language=python]
+  from lmath import Expression
+\end{lstlisting}
+Ji yra bet kokios matematinės išraiškos abstrakcija. Pati paprasčiausia
+išraiška yra konstanta. Bibliotekoje realizuotos matematinės konstantos
+$\pi$ ir $e$. Taip pat \verb|Expression| konstruktoriui galima paduoti
+sveikus skaičius. Įvykdę:
+\begin{lstlisting}[language=python]
+  from lmath import Expression, pi, e
+  show = lambda x: x.latex() + '&=' + x.asString(10)
+  a = Expression()        # Jei nenurodyta jokia, numatytoji yra 0
+  b = Expression(1)
+  print r'\begin{align*}'
+  print show(pi), r'\\'
+  print show(e), r'\\'
+  print show(a), r'\\'
+  print show(b), r'\\'
+  print r'\end{align*}'
+\end{lstlisting}
+gautume:
+
+\begin{python}%
+from lmath import Expression, pi, e
+show = lambda x: x.latex() + '&=' + x.asString(10)
+a = Expression()
+b = Expression(1)
+print r'\begin{align*}'
+print show(pi), r'\\'
+print show(e), r'\\'
+print show(a), r'\\'
+print show(b)
+print r'\end{align*}'
+\end{python}
+
+Turint apsibrėžus „pamatines“ išraiškas, galima su jomis įvairiai 
+manipuliuoti – sudėti, atimti, padauginti, padalinti bei pakelti
+laipsniu. Pavyzdžiui, įvykdę:
+\begin{lstlisting}[language=python]
+  from lmath import Expression, pi, e
+  show = lambda x: x.latex() + '&=' + x.asString(10)
+  a = Expression(3)
+  b = Expression(7)
+  print r'\begin{align*}'
+  print show(a + b), r'\\'
+  print show(-a), r'\\'
+  print show(a - b), r'\\'
+  print show(a * b), r'\\'
+  print show(a / b), r'\\'
+  print show(a ^ b)    
+  print r'\end{align*}'
+\end{lstlisting}
+gausime:
+\begin{python}%
+from lmath import Expression, pi, e
+show = lambda x: x.latex() + '&=' + x.asString(10)
+a = Expression(3)
+b = Expression(7)
+print r'\begin{align*}'
+print show(a + b), r'\\'
+print show(-a), r'\\'
+print show(a - b), r'\\'
+print show(a * b), r'\\'
+print show(a / b), r'\\'
+print show(a ^ b)
+print r'\end{align*}'
+\end{python}
+
+Pastaba: numatytasis kėlimo laipsniu operatorius Python programavimo kalboje
+yra „\verb|**|“, bet kadangi tokio operatoriaus nėra C++, todėl vietoj jo 
+buvo perdengtas „\verb|^|“ operatorius.
+
+Prie turimos išraiškos galima pridėti (atimti, padauginti, padalinti, 
+pakelti laipsniu) ne tik kitą išraišką, bet ir sveiką skaičių:
+\begin{lstlisting}[language=python]
+  from lmath import Expression, pi, e
+  show = lambda x: x.latex() + '&=' + x.asString(10)
+  a = Expression(3)
+  print r'\begin{align*}'
+  print show(a + 7), r'\\'
+  print show(a - 7), r'\\'
+  print show(a * 7), r'\\'
+  print show(a / 7), r'\\'
+  print show(pi * (a ^ 2))
+  print r'\end{align*}'
+\end{lstlisting}
+\begin{python}%
+from lmath import Expression, pi, e
+show = lambda x: x.latex() + '&=' + x.asString(10)
+a = Expression(3)
+print r'\begin{align*}'
+print show(a + 7), r'\\'
+print show(a - 7), r'\\'
+print show(a * 7), r'\\'
+print show(a / 7), r'\\'
+print show(pi * (a ^ 2))
+print r'\end{align*}'
+\end{python}
+
+Be šių pagrindinių veiksmų bibliotekoje, taip pat yra realizuotos
+$\sin$, $\cos$, $\exp$ ir $\ln$ funkcijos, kurioms argumentas gali
+būti tiek sveikas skaičius, tiek ir kita išraiška:
+
+\begin{lstlisting}[language=python]
+  from lmath import Expression, pi, e, sin, cos, exp, ln
+  show = lambda x: x.latex() + '&=' + x.asString(10)
+  a = Expression(3)
+  print r'\begin{align*}'
+  print show(sin(pi/2 + 1)), r'\\'
+  print show(sin(1)), r'\\'
+  print show(cos(-pi/2 + 1)), r'\\'
+  print show(cos(1)), r'\\'
+  print show(exp(pi)), r'\\'
+  print show(exp(2)), r'\\'
+  print show(ln(e^10)), r'\\'
+  print show(ln(10))
+  print r'\end{align*}'
+\end{lstlisting}
+\begin{python}%
+from lmath import Expression, pi, e, sin, cos, exp, ln
+show = lambda x: x.latex() + '&=' + x.asString(10)
+a = Expression(3)
+print r'\begin{align*}'
+print show(sin(pi/2 + 1)), r'\\'
+print show(sin(1)), r'\\'
+print show(cos(-pi/2 + 1)), r'\\'
+print show(cos(1)), r'\\'
+print show(exp(pi)), r'\\'
+print show(exp(2)), r'\\'
+print show(ln(e^10)), r'\\'
+print show(ln(10))
+print r'\end{align*}'
+\end{python}
+
+% \begin{python}%
+% from lmath import latex_show_as_aligned
+% from lmath import Expression, e, pi
+% a = Expression()
+% b = Expression(1)
+% print latex_show_as_aligned([
+%   [e.latex(), '=', e.asString(10)],
+%   [pi.latex(), '=', pi.asString(10)],
+%   [a.latex(), '=', a.asString(10)],
+%   [b.latex(), '=', b.asString(10)],
+%   ])
+% \end{python}
+
