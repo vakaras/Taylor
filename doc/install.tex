@@ -1,0 +1,87 @@
+\chapter{Kompiliavimas}
+
+Biblioteka turėtų veikti tiek \verb|Windows|, tiek 
+\verb|Unix| tipo operacinėse sistemose, bet dėl techninių priežasčių
+ji buvo ištestuota tik \verb|Ubuntu| (tiek 64, tiek 32 bitų 
+architektūros) operacinėse sistemose. Žemiau pateikiama instrukcija
+kaip paruošti biblioteką naudojimui \verb|Ubuntu| sistemoje.
+
+\section{Kompiliavimas \emph{Ubuntu} sistemoje}
+
+Pirmiausia reikia nusikopijuoti išeities tekstus į vietą, kur naudotojas
+turi rašymo teises. Tai galima padaryti arba tiesiog nukopijuojant
+iš \verb|CD|, arba jei sistemoje yra įdiegta \verb|Git| versijų kontrolės
+sistema \cite{git}, tai išeities tekstus galima parsisiųsti iš centrinės
+saugyklos įvykdžius komandą:
+
+\begin{lstlisting}[language=bash]
+  git clone git://github.com/vakaras/Taylor.git  
+\end{lstlisting}
+
+Jei \verb|$src| yra šakninis išeities tekstų katalogas, o \verb|$dest|
+katalogas, į kurį norima įdiegti Python paketą, tai tai galima 
+atlikti įvykdžius tokią komandų seką:
+
+\begin{lstlisting}[language=bash]
+  cd "$src"
+  chmod 755 install.sh
+  ./install.sh "$dest"
+\end{lstlisting}
+
+Sėkmės atveju, į terminalo langą turėtų būti išvesta kažkas panašaus į:
+\begin{verbatim}
+Paskirties vieta: „${HOME}/tmp“.
+Kompiliuojama.
+python setup.py build
+running build
+running build_ext
+building 'lmathcpp' extension
+creating build
+creating build/temp.linux-x86_64-2.6
+...
+Kopijuojama.
+Sėkmingai įdiegta.
+Patikrinti ar veikia galite tokiu būdu:
+$ export PYTHONPATH="${HOME}/tmp:"
+$ python
+>>> from lmath import sin
+>>> print sin(1).asString(50)
+\end{verbatim}
+
+Patikrinti, ar kompiliavimas pavyko galima scenarijaus nurodytu būdu:
+\begin{lstlisting}[language=bash]
+  export PYTHONPATH="${HOME}/tmp:"
+  python
+\end{lstlisting}
+\begin{lstlisting}[language=python]
+  from lmath import sin
+  print sin(1).asString(50)
+\end{lstlisting}
+Turėtų išvesti:
+\begin{verbatim}
+0.8414709848078965066525023216302989996225630607984
+\end{verbatim}
+
+Pastaba: norint, kad biblioteka galima būtų pasinaudoti iš \LaTeX, 
+kartu su paketu (aplankas \verb|lmath|) į \LaTeX dokumento išeities
+tekstų pagrindinį katalogą reikia nukopijuoti ir failą 
+\verb|doc/python.sty|. Tada dokumento preambulėje pridėjus
+komandą \verb|\usepackage{python}|, į patį dokumentą galima bus pridėti
+kreipinius į \verb|lmath| biblioteką: %TODO Pridėti LaTeX
+\begin{lstlisting}[language=tex]
+  \begin{equation*}
+    \begin{python}%
+  from lmath import pi
+  print pi.asString(32)
+    \end{python}
+  \end{equation*}
+\end{lstlisting}
+
+Sukompiliuotas rezultatas atrodytų šitaip:
+
+\begin{equation*}
+  \begin{python}%
+from lmath import pi
+print pi.asString(32)
+  \end{python}
+\end{equation*}

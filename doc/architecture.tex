@@ -9,6 +9,18 @@ greitis yra itin svarbus, tai pati biblioteka buvo realizuota naudojant
 C++ programavimo kalbą ir prijungta pasinaudojus \verb|Boost.Python| 
 \cite{boost_python} biblioteką.
 
+Tokia pasirinkta architektūra turi porą privalumų:
+\begin{itemize}
+  \item lengvai praplečiama – galima naudoti kartu su kitomis Python 
+    bibliotekomis ir sintaksinėmis konstrukcijomis (pavyzdžiui, kartu
+    \verb|xml.dom.minidom| galima braižyti itin didelio tikslumo 
+    \verb|SVG| \cite{svg} formato brėžinius);
+  \item platus panaudojimo spektras – galima tiesiogiai naudoti
+    serveriuose, teikiant \url{http://sagenb.org} 
+    arba \url{http://wolframalpha.com} tipo servisus, bei
+    generuojant \LaTeX dokumentus.
+\end{itemize}
+
 Pačią biblioteką pagal atsakomybes galima suskirstyti į tris dalis:
 \begin{enumerate}
   \item klasės ir funkcijos atsakingos už veiksmus su didelio tikslumo
@@ -54,13 +66,13 @@ apskaičiuoti $\arctg 1$ reikšmę ir padauginti iš $4$. Išskleiskime
 $\arctg x$ Teiloro eilute taške $0$:
 
 \begin{align*}
-  (\arctg x)'|_{x=0} &= \frac{1}{1 + x^2}|_{x=0} &= 1 \\
-  (\arctg x)''|_{x=0} &= -\frac{2 x}{(1 + x^2)^2}|_{x=0} &= 0 \\
+  (\arctg x)'|_{x=0} &= \frac{1}{1 + x^2}|_{x=0} = 1 \\
+  (\arctg x)''|_{x=0} &= -\frac{2 x}{(1 + x^2)^2}|_{x=0} = 0 \\
   (\arctg x)'''|_{x=0} &=%
-    \frac{8 x^2}{(x^2 + 1)^3} - \frac{2}{(x^2 + 1)^2} &= -2 \\
+    \frac{8 x^2}{(x^2 + 1)^3} - \frac{2}{(x^2 + 1)^2} = -2 \\
   \cdots\\
-  (\arctg x)^{(2k)}|_{x=0} &= \cdots &= 0 \\
-  (\arctg x)^{(2k+1)}|_{x=0} &= \cdots &= (-1)^{k+1}(2k)! 
+  (\arctg x)^{(2k)}|_{x=0} &= \cdots = 0 \\
+  (\arctg x)^{(2k+1)}|_{x=0} &= \cdots = (-1)^{k+1}(2k)! 
 \end{align*}
 
 \begin{equation}
@@ -74,16 +86,21 @@ tiesiog įsistatyti $x = 1$ ir galėsime apskaičiuoti $\frac{\pi}{4}$ reikšmę
 norimu tikslumu. Problema yra tame, kad kai $x$ artimas 1, tai ši
 eilutė konverguoja labai lėtai, todėl reikės labai daug dėmenų, kad
 pasiektume norimą tikslumą. Šią problemą galime išspręsti pasinaudoję
-tokia matematine tapatybe \cite{fractal_pi}: % TODO Įrodyti tapatybę.
+tokia matematine tapatybe: % TODO Įrodyti tapatybę.
 \begin{equation}
-  \arctg 1 = 4 \arctg \frac{1}{5} - \arctg \frac{1}{239}
+  \arctg 1 = 4 \arctg \frac{1}{5} - \arctg \frac{1}{239}.
   \label{pi_3}
-\end{equation}.
-% TODO Aprėžti liekamąjį narį.
+\end{equation}
+
+Pasinaudoję ja galime vietoj to, kad skaičiuotume sumą lėtai 
+konverguojančios eilutės, suskaičiuoti sumas dviejų žymiai greičiau
+konverguojančių eilučių.
+% TODO Aprėžti liekamąjį narį. Žr. alternuojančios eilutės ir
+% Leibnico požymis.
 
 \subsection{Trigonometrinių funkcijų reikšmių apskaičiavimas}
 
-Išskleiskime $\sin x$ Teiloro eilute:
+Išskleiskime $\sin x$ laipsnine eilute taške $0$:
 
 \begin{align*}
   (\sin x)'|_{x=0} &= \cos x|_{x=0} &= 1 \\
@@ -133,7 +150,79 @@ $\cos$ reikšmę norimu tikslumu galime apskaičiuoti analogišku būdu.
 
 \subsection{Eksponentės ir natūrinio logaritmo reikšmės apskaičiavimas}
 
+Išskleiskime $e^{x}$ laipsnine eilute taške $0$:
+
+\begin{align*}
+  (e^{x})'|_{x=0} &= e^{x}|_{x=0} = 1 \\
+  (e^{x})''|_{x=0} &= e^{x}|_{x=0} = 1 \\
+  (e^{x})'''|_{x=0} &= e^{x}|_{x=0} = 1 \\
+  \cdots \\
+  (e^{x})^{(n)}|_{x=0} &= e^{x}|_{x=0} = 1 \\
+\end{align*}
+
+\begin{equation}
+  e^{x} = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} +%
+    \frac{x^4}{4!} + \frac{x^5}{5!} + \cdots
+  \label{e_1}
+\end{equation}
+
+% TODO Aprėžti liekamąjį narį.
+
+Dabar išskleiskime natūrinį logaritmą $\ln (1+x)$ laipsnine eilute 
+taške $0$:
+\begin{align*}
+  (\ln (1 + x))'|_{x=0} &= \left. \frac{1}{1+x} \right|_{x=0} = 1 \\
+  (\ln (1 + x))''|_{x=0} &= \left. \frac{-1!}{(1+x)^{2}} \right|_{x=0} %
+    = -1! \\
+  (\ln (1 + x))'''|_{x=0} &= \left. \frac{2!}{(1+x)^{3}} \right|_{x=0} %
+    = 2! \\
+  \cdots \\
+  (\ln (1 + x))^{(n)}|_{x=0} &= %
+    \left. \frac{(-1)^{n-1}(n-1)!}{(1+x)^{n}} \right|_{x=0} = %
+    (-1)^{n-1}(n-1)!
+\end{align*}
+
+\begin{equation}
+  \ln (1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
+  \label{ln_1}
+\end{equation}
+
+Kadangi gautoji eilutė yra alternuojančioji ir 
+$\frac{x^n}{n} > \frac{x^{n+1}}{n+1}$, kai $x \in (-1; 1)$, tai pagal 
+Leibnico požymį eilutė konverguos ir paklaida bus mažesnė už pirmąjį
+atmestąjį narį. Deja, kai $|x| > 1$ ši eilutė diverguoja, o mes
+norime apskaičiuoti $\ln z, \forall z$, kai $z > 0$. Be to, 
+kai $|x|$ artėja prie 1, tai eilutė konverguoja labai lėtai. Taigi
+mums reikia kiek įmanoma sumažinti $|x|$ reikšmę. Tai galime padaryti
+pasinaudodami rekursija:
+\begin{enumerate}
+  \item \label{ln_2} jei $z \in \left[ \frac{1}{2}; 1\frac{1}{2} \right]$, 
+    tai apskaičiuojame reikšmę naudodami skleidinį, kai $x = z - 1$;
+  \item jei $z < \frac{1}{2}$, tai 
+    $\ln z = \ln \left( \frac{ze}{e} \right) =$
+    $\ln (ze) - \ln e = \ln (ze) - 1$. Su $\ln (ze)$ vėl pradedame
+    nuo \ref{ln_2} žingsnio;
+  \item jei $z > 1\frac{1}{2}$, tai 
+    $\ln z = \ln \left( e\frac{z}{e} \right) =$
+    $\ln \left( \frac{z}{e} \right) + \ln e =$
+    $\ln \left( \frac{z}{e} \right) + 1$. Su 
+    $\ln \left( \frac{z}{e} \right)$ vėl pradedame nuo \ref{ln_2}
+    žingsnio.
+\end{enumerate}
+
 \section{Išraiškų apdorojimas}
+
+Šią dalį sudaro išvestinės klasės iš abstrakčios klasės \verb|Expression|.
+Kiekviena iš jų reprezentuoja arba skaitinę išraišką (konstantas $e$,
+$\pi$ arba sveikąjį skaičių) arba kokį nors veiksmą su kitomis išraiškomis
+(sudėtį, atimtį, dalybą, $\sin$ apskaičiavimą ir panašiai). Jos yra 
+atsakingos už savo reikšmės apskaičiavimą nurodytu dešimtainiu tikslumu.
+Apskaičiuotas rezultatas yra grąžinamas, kaip simbolių eilutė, kurioje yra
+suapvalintas dešimtainis skaičius, turintis nurodytą kiekį dešimtainių
+skaitmenų.
 
 \section{Sąsaja}
 
+Bibliotekos Python sąsaja realizuota sukuriant apgaubiančią klasę
+\verb|PythonExpression|, kurią \verb|Boost.Python| bibliotekos dėka
+galima tiesiogiai pasiekti iš Python.
