@@ -178,7 +178,23 @@ Išskleiskime $e^{x}$ laipsnine eilute taške $0$:
   \label{e_1}
 \end{equation}
 
-% TODO Aprėžti liekamąjį narį.
+Šios eilutės Lagranžo formos liekamasis narys yra:
+
+\begin{equation}
+  r_n (x) = \frac{(e^x)^{(n + 1)}(x')}{(n + 1)!}(x - 0)^{n + 1}
+\end{equation}
+
+Čia $x'$ yra skaičius iš intervalo $(0; x)$.
+
+Kadangi $(e^x)' = e^x$, liekamąjį narį galime įvertinti taip:
+
+\begin{equation}
+  r_n (x) \leq \frac{e^x}{(n + 1)!}x^{n + 1}
+\end{equation}
+
+Todėl, eksponentę apskaičiuojančiai funkcijai susumavus pirmus $n$ eilutės
+narius, gautas rezultatas yra pakankamai tikslus, kai $n + 1$-asis narys
+būtų nedidesnis už leistiną paklaidą.
 
 Dabar išskleiskime natūrinį logaritmą $\ln (1+x)$ laipsnine eilute 
 taške $0$:
