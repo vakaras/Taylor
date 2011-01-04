@@ -41,7 +41,7 @@ Number ataninvint(long x, long precision) {
   return number;
   }
 
-/// Returns pi/4 as Number with correct at least given decimal diggits.
+/// Returns pi/4 as Number with correct at least given decimal digits.
 /**
  * This function is not thread safe.
  */
