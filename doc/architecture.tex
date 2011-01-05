@@ -176,25 +176,41 @@ Išskleiskime $e^{x}$ laipsnine eilute taške $0$:
   \label{e_1}
 \end{equation}
 
-Šios eilutės Lagranžo formos liekamasis narys yra:
+Pagal Delambero požymį gauname, jog ši eilutė konverguoja su visais $x$:
+
+\begin{equation*}
+  \lim_{n \to +\infty} 
+    \left| \frac{\frac{x^{n+1}}{(n+1)!}}{\frac{x^n}{n!}} \right| =
+    \lim_{n \to +\infty} \left| \frac{x}{n+1} \right| = 0.
+\end{equation*}
+
+Akivaizdu, kad ši eilutė tuo greičiau konverguoja, kuo $x$ yra mažesnis.
+Laipsnį galime sumažinti iki $x \leq 1$ pasinaudodami paprasčiausia
+tapatybe:
+\begin{equation*}
+  e^{x} = e^{\frac{x}{2} + \frac{x}{2}} =%
+    e^{\frac{x}{2}} \cdot e^{\frac{x}{2}}.
+\end{equation*}
+
+Žinodami, kad $x \leq 1$, galime pabandyti įvertinti paklaidą. Šios 
+eilutės Lagranžo formos liekamasis narys yra:
 
 \begin{equation}
-  r_n (x) = \frac{(e^x)^{(n + 1)}(x')}{(n + 1)!}(x - 0)^{n + 1}
+  r_n (x) = \frac{(e^c)}{(n + 1)!} x^{n + 1}.
 \end{equation}
 
-Čia $x'$ yra skaičius iš intervalo $(0; x)$.
-
-Kadangi $(e^x)' = e^x$, liekamąjį narį galime įvertinti taip:
-
-\begin{equation}
-  r_n (x) \leq \frac{e^x}{(n + 1)!}x^{n + 1}
-\end{equation}
-
-Todėl, eksponentę apskaičiuojančiai funkcijai susumavus pirmus $n$ eilutės
-narius, gautas rezultatas yra pakankamai tikslus, kai $n + 1$-asis narys
-būtų nedidesnis už leistiną paklaidą.
-% FIXME Vertinimo būdas nėra teisingas – eilutė nėra alternuojanti, todėl
-% mums rūpi ne pirmas atmestas narys, o visų atmestų narių suma.
+Čia $c$ yra skaičius iš intervalo $[0; 1]$, todėl liekamasis narys bus
+ne didesnis, nei:
+\begin{align*}
+  r_{n} %
+  &= \frac{e^{c}}{(n + 1)!} x^{n+1} \\
+  &\leq \frac{e^{1}}{(n + 1)!} 1^{n+1} \\
+  &\leq \frac{3}{(n + 1)!} \\
+  &\leq \frac{1}{n!}, &\text{ kai } n > 3.
+\end{align*}
+Taigi, gavome, kad norint suskaičiuoti norimu tikslumu eksponentės 
+reikšmę, pakanka skaičiuoti tol, kol pridėtasis narys, bus mažesnis
+už norimą tikslumą.
 
 Dabar išskleiskime natūrinį logaritmą $\ln (1+x)$ laipsnine eilute 
 taške $0$:
