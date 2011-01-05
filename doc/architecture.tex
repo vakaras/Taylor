@@ -184,23 +184,25 @@ Pagal Delambero požymį gauname, jog ši eilutė konverguoja su visais $x$:
     \lim_{n \to +\infty} \left| \frac{x}{n+1} \right| = 0.
 \end{equation*}
 
-Akivaizdu, kad ši eilutė tuo greičiau konverguoja, kuo $x$ yra mažesnis.
-Laipsnį galime sumažinti iki $x \leq 1$ pasinaudodami paprasčiausia
+Akivaizdu, kad ši eilutė tuo greičiau konverguoja, kuo $|x|$ yra mažesnis.
+Laipsnį galime sumažinti iki $|x| \leq 1$ pasinaudodami paprasčiausia
 tapatybe:
 \begin{equation*}
   e^{x} = e^{\frac{x}{2} + \frac{x}{2}} =%
     e^{\frac{x}{2}} \cdot e^{\frac{x}{2}}.
 \end{equation*}
 
-Žinodami, kad $x \leq 1$, galime pabandyti įvertinti paklaidą. Šios 
+Žinodami, kad $|x| \leq 1$, galime pabandyti įvertinti paklaidą. Šios 
 eilutės Lagranžo formos liekamasis narys yra:
 
 \begin{equation}
   r_n (x) = \frac{(e^c)}{(n + 1)!} x^{n + 1}.
 \end{equation}
 
-Čia $c$ yra skaičius iš intervalo $[0; 1]$, todėl liekamasis narys bus
-ne didesnis, nei:
+Čia $c$ yra skaičius iš intervalo $[-1; 1]$, todėl liekamasis narys bus
+ne didesnis, nei\footnote{Čia įvertinama, tariant kad $c \in [0; 1]$.
+Kai $c \in [-1; 0]$, tą patį gauname iš Leibnico požymio 
+alternuojančioms eilutėms.}:
 \begin{align*}
   r_{n} %
   &= \frac{e^{c}}{(n + 1)!} x^{n+1} \\
