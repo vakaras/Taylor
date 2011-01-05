@@ -39,18 +39,41 @@ funkcijos: $\sin$, $\cos$, $\exp$ ir t.t. Klasė \verb|Number| yra
 apgaubiančioji klasė, kuri leidžia naudotis \verb|MPFR| \cite{mpfr} 
 bibliotekos funkcijoms, objektinei paradigmai įprastu būdu.
 
-Toliau skyreliuose aprašytos esminės idėjos, kaip buvo realizuotos kai
-kurios funkcijos.
+Visos realizuotos funkcijos skaičiavimams naudoja funkcijų skleidinius
+Teiloro eilute\footnote{Brukas Teiloras (angliškai Brook Taylor) yra 
+XVII a. pabaigoje – XVIII a. pradžioje gyvenęs anglų matematikas.}.
+Teiloro teorema leidžia pakeisti sudėtingą funkciją paprasčiausios 
+klasės funkcija – polinomu ir įvertinti dėl to atsiradusią paklaidą.
+Būtina sąlyga, kuri turi būti tenkinama – mūsų nagrinėjama funkcija
+turi būti $n+1$ kartą diferencijuojama. Tada, ją galėsime iki $n$-ojo
+nario „išskleisti“ taške $x_{0}$:
+\begin{align*}
+  f(x) 
+  =& f(x_{0} + \frac{f'(x)|_{x=x_{0}}}{1!} (x - x_{0}) + %
+  \frac{f''(x)|_{x=x_{0}}}{2!} (x - x_{0}) + \\
+  &+ \frac{f'''(x)|_{x=x_{0}}}{3!} (x - x_{0}) + \cdots +
+  \frac{f^{(n)}(x)|_{x=x_{0}}}{n!} (x - x_{0}) + r_{n}(x),
+\end{align*}
+kur $r_{n}(x)$ – padaryta paklaida, kurią gauname skaičiuodami funkcijos
+reikšmę taške $x$, naudodami funkcijos keitinį $n$-ojo laipsnio polinomu.
 
-% Ji yra apgaubiančioji klasė \verb|MPFR|
-% \cite{mpfr} bibliotekos funkcijoms.
+Teiloro teorema garantuoja, jog egzistuoja toks 
+$c (c \in (\min \left\{ x, x_{0} \right\}; $%
+$\max \left\{ x, x_{0} \right\}))$, kad
+\begin{equation*}
+  r_{n}(x) = \frac{f^{(n+1)}(c)}{(n+1)!} (x - x_{0})^{(n+1)}.
+\end{equation*}
+Ši liekamojo nario forma yra Lagranžo. Yra ir kitų būdų įvertinti paklaidą
+(pavyzdžiui, $o$), bet įvertinimams buvo naudojama būtent ši. 
 
-% Šiai bibliotekos daliai priklauso klasė \verb|Number|\footnote{Klasė yra
-% faile \verb|cpp/number.h|.} bei įvairios pagalbinės 
-% funkcijos\footnote{Funkcijos yra failuose \verb|cpp/number_*.h|.}.
-% Klasė \verb|Number| yra apgaubianti klasė, leidžianti naudotis 
-% \verb|MPFR| \cite{mpfr} didelio tikslumo skaičių biblioteka, įprastu 
-% objektinei paradigmai būdu. 
+Teiloro formulė mums svarbi tuo, jog leidžia sudėtingas funkcijas pakeisti
+polinomais, kurių reikšmes apskaičiuojantys algoritmai yra itin paprasti.
+Deja, pakeitimas Teiloro eilute veiksmingas tik argumentams iš pakankamai
+mažos reikšmių srities (didesniems žymiai lėčiau konverguoja, o kai 
+kurios eilutės iš vis diverguoja), todėl norint realizuoti algoritmą,
+kuris sugebėtų apskaičiuoti bet kokius funkcijos argumentus, būtina
+juos prieš „pateikiant“ Teiloro eilutei „sumažinti“. Kaip konkrečiai 
+buvo realizuota kiekviena funkcija, aprašyta toliau esančiuose skyreliuose.
 
 \subsection{$\pi$ reikšmės apskaičiavimas}
 
@@ -144,10 +167,12 @@ argumentams reikės tik pakeisti rezultato ženklą), tai jį „sumažinti“
 taip, kad jis būtų iš intervalo $[-\frac{\pi}{4}; \frac{\pi}{4}]$, galime 
 tokiu būdu:
 \begin{enumerate}
-  \item jei $y := x - \left\lfloor \frac{x}{2\pi} \right\rfloor \cdot (2\pi)$, 
+  \item jei 
+    $y := x - \left\lfloor \frac{x}{2\pi} \right\rfloor \cdot (2\pi)$, 
     tai $y \in [0; 2\pi]$;
   \item jei $y \in [0; \frac{\pi}{4})$, tai $\sin x = \sin y$;
-  \item jei $y \in [\frac{\pi}{4}; \frac{3\pi}{4})$, tai $\sin x = \cos (y - \frac{\pi}{2})$;
+  \item jei $y \in [\frac{\pi}{4}; \frac{3\pi}{4})$, tai 
+    $\sin x = \cos (y - \frac{\pi}{2})$;
   \item jei $y \in [\frac{3\pi}{4}; 1\frac{1}{4}\pi)$, tai 
     $\sin x = \sin (\pi - y)$;
   \item jei $y \in [1\frac{1}{4}\pi; 1\frac{3}{4}\pi)$, tai
@@ -199,9 +224,9 @@ eilutės Lagranžo formos liekamasis narys yra:
   r_n (x) = \frac{(e^c)}{(n + 1)!} x^{n + 1}.
 \end{equation}
 
-Čia $c$ yra skaičius iš intervalo $[-1; 1]$, todėl liekamasis narys bus
-ne didesnis, nei\footnote{Čia įvertinama, tariant kad $c \in [0; 1]$.
-Kai $c \in [-1; 0]$, tą patį gauname iš Leibnico požymio 
+Čia $c$ yra skaičius iš intervalo $(-1; 1)$, todėl liekamasis narys bus
+ne didesnis, nei\footnote{Čia įvertinama, tariant kad $c \in [0; 1)$.
+Kai $c \in (-1; 0]$, tą patį gauname iš Leibnico požymio 
 alternuojančioms eilutėms.}:
 \begin{align*}
   r_{n} %
