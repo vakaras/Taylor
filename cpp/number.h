@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <string>
+#include <cstdlib>
 #include <cmath>
 #include <gmp.h>
 #include <mpfr.h>
@@ -191,7 +192,7 @@ public:
     }
 
   /// Returns string representation in form "%*Rf" with given width.
-  std::string asFormatedString(long width) {
+  std::string asFormatedString(long width) const {
     // FIXME: Not DRY code.
 
     mpfr_exp_t exp = mpfr_get_exp(this->value);
@@ -424,6 +425,18 @@ public:
    */
   int cmpAbs(const Number &other) const {
     return mpfr_cmpabs(this->value, other.value);
+    }
+  
+  /// Compares this number absolute value with other number absolute value.
+  /**
+   * @returns positive if this number is bigger, zero if they are equal and
+   * negative if this number is smaller.
+   */
+  int cmpAbs(long other) const {
+    if (this->isNegative()) {
+      return -mpfr_cmp_si(this->value, -labs(other));
+      }
+    return mpfr_cmp_si(this->value, labs(other));
     }
 
   /// Checks if number is negative.

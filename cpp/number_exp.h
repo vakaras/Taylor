@@ -4,8 +4,8 @@
 #include "exceptions.h"
 #include "number.h"
 
-/// Calculates e^{x}
-Number &exp(const Number &x) {
+/// Calculates e^{x}, when x <= 1.
+Number &exp2(const Number &x) {
 
   Number &result = *(new Number(1, x.getPrecision()));    
                                         // 1 + \frac{x^1}{1!} + \cdots
@@ -21,6 +21,22 @@ Number &exp(const Number &x) {
     }
   
   return result;
+  }
+
+/// Calculates e^{x}. Modifies argument.
+Number &exp(Number &x) {
+
+  if (x.cmpAbs(1) <= 0) {
+    Number &result = exp2(x);
+    return result;
+    }
+  else {
+    x >>= 1;
+    Number &result = exp(x);
+    result.sqr();
+    return result;
+    }
+
   }
 
 long getEPrecision(long digits) {
