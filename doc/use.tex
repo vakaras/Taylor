@@ -11,7 +11,7 @@ sveikus skaičius. Įvykdę:
 \begin{lstlisting}[language=python]
   from lmath import Expression, pi, e
   show = lambda x: x.latex() + '&=' + x.asString(10)
-  a = Expression()        # Jei nenurodyta jokia, numatytoji yra 0
+  a = Expression()        # Numatytoji yra 0.
   b = Expression(1)
   print r'\begin{align*}'
   print show(pi), r'\\'
