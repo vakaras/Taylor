@@ -34,10 +34,10 @@ C++ ir Python.
 \section{Veiksmai su didelio tikslumo skaičiais}
 
 Šią dalį sudaro C++ klasė \verb|Number|, kuri realizuoja didelio tikslumo
-slankaus kablelio skaičių bei tiesiogiai ją naudojančios matematinės
+slankaus kablelio skaičių, bei tiesiogiai ją naudojančios matematinės
 funkcijos: $\sin$, $\cos$, $\exp$ ir t.t. Klasė \verb|Number| yra 
 apgaubiančioji klasė, kuri leidžia naudotis \verb|MPFR| \cite{mpfr} 
-bibliotekos funkcijoms, objektinei paradigmai įprastu būdu.
+bibliotekos funkcijomis objektinei paradigmai įprastu būdu.
 
 Visos realizuotos funkcijos skaičiavimams naudoja funkcijų skleidinius
 Teiloro eilute\footnote{Brukas Teiloras (angliškai Brook Taylor) yra 
@@ -70,7 +70,7 @@ Teiloro formulė mums svarbi tuo, jog leidžia sudėtingas funkcijas pakeisti
 polinomais, kurių reikšmes apskaičiuojantys algoritmai yra itin paprasti.
 Deja, pakeitimas Teiloro eilute veiksmingas tik argumentams iš pakankamai
 mažos reikšmių srities (didesniems žymiai lėčiau konverguoja, o kai 
-kurios eilutės iš vis diverguoja), todėl norint realizuoti algoritmą,
+kurios eilutės išvis diverguoja), todėl, norint realizuoti algoritmą,
 kuris sugebėtų apskaičiuoti bet kokius funkcijos argumentus, būtina
 juos prieš „pateikiant“ Teiloro eilutei „sumažinti“. Kaip konkrečiai 
 buvo realizuota kiekviena funkcija, aprašyta toliau esančiuose skyreliuose.
@@ -201,7 +201,7 @@ Išskleiskime $e^{x}$ laipsnine eilute taške $0$:
   \label{e_1}
 \end{equation}
 
-Pagal Delambero požymį gauname, jog ši eilutė konverguoja su visais $x$:
+Pagal Dalambero požymį gauname, jog ši eilutė konverguoja su visais $x$:
 
 \begin{equation*}
   \lim_{n \to +\infty} 
@@ -225,7 +225,7 @@ eilutės Lagranžo formos liekamasis narys yra:
 \end{equation}
 
 Čia $c$ yra skaičius iš intervalo $(-1; 1)$, todėl liekamasis narys bus
-ne didesnis, nei\footnote{Čia įvertinama, tariant kad $c \in [0; 1)$.
+nedidesnis, nei\footnote{Čia įvertinama, tariant kad $c \in [0; 1)$.
 Kai $c \in (-1; 0]$, tą patį gauname iš Leibnico požymio 
 alternuojančioms eilutėms.}:
 \begin{align*}
